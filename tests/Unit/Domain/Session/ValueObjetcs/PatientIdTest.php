@@ -9,8 +9,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
-final class PatientIdTest extends TestCase
-{
+final class PatientIdTest extends TestCase {
     public function test_it_generates_a_valid_uuid_v7(): void {
         $patientId = PatientId::generate();
 
