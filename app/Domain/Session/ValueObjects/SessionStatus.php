@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Session\ValueObjects;
 
-enum SessionStatus: string
-{
+enum SessionStatus: string {
     case Scheduled = 'scheduled';
     case Completed = 'completed';
     case Cancelled = 'cancelled';
