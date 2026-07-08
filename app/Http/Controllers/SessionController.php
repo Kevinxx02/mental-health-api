@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
+use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
+use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
+use App\Http\Requests\ScheduleSessionRequest;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+final class SessionController extends Controller
+{
+    public function __construct(
+        private readonly ScheduleSessionHandler $handler,
+    ) {}
+
+    public function store(
+        ScheduleSessionRequest $request
+    ) : JsonResponse {
+        $response = ($this->handler)(
+            new ScheduleSessionCommand(
+                patientId: $request->string('patient_id')->toString(),
+                therapistId: $request->string('therapist_id')->toString(),
+                sessionDate: $request->string('session_date')->toString(),
+            )
+        );
+
+        return response()->json(
+            [
+                'session_id' => $response->sessionId,
+            ],
+            Response::HTTP_CREATED,
+        );
+    }
+}

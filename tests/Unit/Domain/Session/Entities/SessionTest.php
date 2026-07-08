@@ -186,7 +186,6 @@ final class SessionTest extends TestCase {
 
     private function createSession(): Session {
         return Session::schedule(
-            SessionId::generate(),
             PatientId::generate(),
             TherapistId::generate(),
             SessionDate::fromDateTime(

@@ -17,25 +17,42 @@ final class Session {
         private readonly PatientId $patientId,
         private readonly TherapistId $therapistId,
         private SessionDate $sessionDate,
-        private SessionStatus $status,
+        private SessionStatus $status
     ) {}
 
     public static function schedule(
+        PatientId $patientId,
+        TherapistId $therapistId,
+        SessionDate $sessionDate
+    ) : self {
+        $sessionId = SessionId::generate();
+
+        return new self(
+            $sessionId,
+            $patientId,
+            $therapistId,
+            $sessionDate,
+            SessionStatus::default()
+        );
+    }
+
+    public static function restore(
         SessionId $id,
         PatientId $patientId,
         TherapistId $therapistId,
         SessionDate $sessionDate,
-    ): self {
+        SessionStatus $status
+    ) : self {
         return new self(
-            $id,
-            $patientId,
-            $therapistId,
-            $sessionDate,
-            SessionStatus::default(),
+            id: $id,
+            patientId: $patientId,
+            therapistId: $therapistId,
+            sessionDate: $sessionDate,
+            status: $status
         );
     }
 
-    public function complete(): void {
+    public function complete() : void {
         if ($this->status->isCompleted()) {
             throw InvalidSessionStateException::alreadyCompleted();
         }
@@ -47,7 +64,7 @@ final class Session {
         $this->status = SessionStatus::Completed;
     }
 
-    public function cancel(): void {
+    public function cancel() : void {
         if ($this->status->isCancelled()) {
             throw InvalidSessionStateException::alreadyCancelled();
         }
@@ -59,7 +76,7 @@ final class Session {
         $this->status = SessionStatus::Cancelled;
     }
 
-    public function reschedule(SessionDate $newDate): void {
+    public function reschedule(SessionDate $newDate) : void {
         if ($this->status->isCompleted()) {
             throw InvalidSessionStateException::cannotRescheduleCompletedSession();
         }
@@ -71,23 +88,23 @@ final class Session {
         $this->sessionDate = $newDate;
     }
 
-    public function id(): SessionId {
+    public function id() : SessionId {
         return $this->id;
     }
 
-    public function patientId(): PatientId {
+    public function patientId() : PatientId {
         return $this->patientId;
     }
 
-    public function therapistId(): TherapistId {
+    public function therapistId() : TherapistId {
         return $this->therapistId;
     }
 
-    public function sessionDate(): SessionDate {
+    public function sessionDate() : SessionDate {
         return $this->sessionDate;
     }
 
-    public function status(): SessionStatus {
+    public function status() : SessionStatus {
         return $this->status;
     }
 }
