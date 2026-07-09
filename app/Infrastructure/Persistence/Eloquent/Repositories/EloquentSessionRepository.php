@@ -11,11 +11,14 @@ use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
+use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
 use DateTimeImmutable;
 use Illuminate\Support\Facades\DB;
-final readonly class EloquentSessionRepository implements SessionRepository
-{
+
+final readonly class EloquentSessionRepository
+    implements SessionRepository {
+
     public function __construct(private SessionModel $model) {}
 
     public function save(Session $session) : void {
@@ -31,13 +34,13 @@ final readonly class EloquentSessionRepository implements SessionRepository
         $model->save();
     }
 
-    public function findById(SessionId $id) : ?Session {
+    public function findById(SessionId $id) : Session {
         $model = $this->model
             ->newQuery()
             ->find($id->value());
 
-            if ($model === null) {
-            return null;
+        if ($model === null) {
+            throw SessionNotFoundException::fromId($id);
         }
 
         return Session::restore(
