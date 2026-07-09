@@ -34,6 +34,17 @@ final readonly class EloquentSessionRepository
         $model->save();
     }
 
+    public function update(Session $session) : void {
+        $model = $this->model->find($session->id()->value());
+
+        $model->patient_id = $session->patientId()->value();
+        $model->therapist_id = $session->therapistId()->value();
+        $model->session_date = $session->sessionDate()->value();
+        $model->status = $session->status()->value;
+
+        $model->save();
+    }
+
     public function findById(SessionId $id) : Session {
         $model = $this->model
             ->newQuery()
