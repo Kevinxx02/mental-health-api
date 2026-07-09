@@ -30,8 +30,6 @@ final readonly class CancelSessionHandler {
 
         $session->cancel();
 
-        $this->repository->save(
-            $session
-        );
+        $this->repository->update($session);
     }
 }

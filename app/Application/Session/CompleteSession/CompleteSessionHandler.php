@@ -30,8 +30,6 @@ final readonly class CompleteSessionHandler {
 
         $session->complete();
 
-        $this->repository->save(
-            $session
-        );
+        $this->repository->update($session);
     }
 }
