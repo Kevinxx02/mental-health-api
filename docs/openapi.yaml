@@ -1,0 +1,142 @@
+openapi: 3.1.0
+
+info:
+  title: Mental Health API
+  version: 1.0.0
+
+servers:
+  - url: http://127.0.0.1:8000/api
+
+paths:
+  /sessions:
+    post:
+      operationId: scheduleSession
+      summary: Schedule a therapy session
+      description: Creates a new therapy session.
+      tags:
+        - Sessions
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleSessionRequest'
+
+      responses:
+        '201':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleSessionRequest'
+  
+  /sessions/{id}/complete:
+    patch:
+      tags:
+        - Sessions
+      operationId: completeSession
+      summary: Complete a session.
+      description: Sets session status to completed.
+
+      parameters:
+        - $ref: '#/components/parameters/SessionId'
+
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+
+  /sessions/{id}/cancel:
+    patch:
+      tags:
+        - Sessions
+        - 
+      operationId: cancelSession
+      summary: Cancel a session.
+      description: Sets session status to cancelled.
+
+      parameters:
+        - $ref: '#/components/parameters/SessionId'
+
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+
+  /sessions/{id}/reschedule:
+    patch:
+      tags:
+        - Sessions
+      operationId: rescheduleSession
+      summary: Reschedule a session.
+      description: Changes session date.
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RescheduleSessionRequest'
+
+      parameters:
+        - $ref: '#/components/parameters/SessionId'
+
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+
+components:
+
+  responses:
+
+    NoContent:
+      description: Operation completed successfully.
+
+  parameters:
+    SessionId:
+      name: id
+      in: path
+      required: true
+      description: Session identifier.
+      schema:
+        type: string
+        format: uuid
+        examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
+
+  schemas:
+    ScheduleSessionRequest:
+      type: object
+      required:
+        - patient_id
+        - therapist_id
+        - session_date
+
+      properties:
+        patient_id:
+          type: string
+          format: uuid
+
+        therapist_id:
+          type: string
+          format: uuid
+
+        session_date:
+          type: string
+          format: date-time
+
+    RescheduleSessionRequest:
+      type: object
+      required:
+        - session_date
+
+      properties:
+        session_date:
+          type: string
+          format: date-time
+
+    ScheduleSessionResponse:
+      type: object
+
+      properties:
+        session_id:
+          type: string
+          format: uuid
