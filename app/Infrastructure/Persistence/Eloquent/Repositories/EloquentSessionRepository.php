@@ -13,6 +13,7 @@ use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
 use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
+use App\Mappers\SessionMapper;
 use DateTimeImmutable;
 use Illuminate\Support\Facades\DB;
 
@@ -65,5 +66,14 @@ final readonly class EloquentSessionRepository
             ),
             SessionStatus::from($model->status),
         );
+    }
+    public function findAll() : array {
+        return SessionModel::query()
+            ->orderBy('session_date')
+            ->get()
+            ->map(
+                SessionMapper::toDomain(...)
+            )
+            ->all();
     }
 }

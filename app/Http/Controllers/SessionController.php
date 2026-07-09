@@ -6,16 +6,23 @@ namespace App\Http\Controllers;
 
 use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
 use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
+
 use App\Application\Session\CompleteSession\CompleteSessionCommand;
 use App\Application\Session\CompleteSession\CompleteSessionHandler;
+
 use App\Application\Session\CancelSession\CancelSessionCommand;
 use App\Application\Session\CancelSession\CancelSessionHandler;
+
+use App\Application\Session\ListSession\ListSessionsHandler;
+use App\Http\Resources\SessionResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+
 use App\Http\Requests\ScheduleSessionRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SessionController extends Controller
-{
+final class SessionController extends Controller {
     public function __construct(
         private readonly ScheduleSessionHandler $handler,
     ) {}
@@ -86,5 +93,13 @@ final class SessionController extends Controller
             [],
             Response::HTTP_NO_CONTENT
         );
+    }
+
+    public function index(
+        ListSessionsHandler $handler
+    ) : AnonymousResourceCollection {
+        $sessions = $handler();
+
+        return SessionResource::collection($sessions);
     }
 }

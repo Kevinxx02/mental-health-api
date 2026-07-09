@@ -8,7 +8,25 @@ servers:
   - url: http://127.0.0.1:8000/api
 
 paths:
+
   /sessions:
+    get:
+      operationId: listSessions
+      summary: List all therapy sessions
+      description: Returns all therapy sessions ordered by session date.
+      tags:
+        - Sessions
+
+      responses:
+        '200':
+          description: List of sessions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+
     post:
       operationId: scheduleSession
       summary: Schedule a therapy session
@@ -29,15 +47,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ScheduleSessionRequest'
-  
+                $ref: '#/components/schemas/Session'
+
   /sessions/{id}/complete:
     patch:
       tags:
         - Sessions
+
       operationId: completeSession
-      summary: Complete a session.
-      description: Sets session status to completed.
+      summary: Complete a therapy session.
+      description: Marks a therapy session as completed.
 
       parameters:
         - $ref: '#/components/parameters/SessionId'
@@ -50,10 +69,10 @@ paths:
     patch:
       tags:
         - Sessions
-        - 
+
       operationId: cancelSession
-      summary: Cancel a session.
-      description: Sets session status to cancelled.
+      summary: Cancel a therapy session.
+      description: Marks a therapy session as cancelled.
 
       parameters:
         - $ref: '#/components/parameters/SessionId'
@@ -66,9 +85,10 @@ paths:
     patch:
       tags:
         - Sessions
+
       operationId: rescheduleSession
-      summary: Reschedule a session.
-      description: Changes session date.
+      summary: Reschedule a therapy session.
+      description: Updates the scheduled date and time of a therapy session.
 
       requestBody:
         required: true
@@ -89,7 +109,7 @@ components:
   responses:
 
     NoContent:
-      description: Operation completed successfully.
+      description: Operation completed successfully. No response body is returned.
 
   parameters:
     SessionId:
@@ -103,6 +123,47 @@ components:
         examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
 
   schemas:
+    Session:
+      type: object
+
+      required:
+        - id
+        - patient_id
+        - therapist_id
+        - session_date
+        - status
+
+      properties:
+        id:
+          type: string
+          format: uuid
+          examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
+
+        patient_id:
+          type: string
+          format: uuid
+          examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
+
+        therapist_id:
+          type: string
+          format: uuid
+          examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
+
+        session_date:
+          type: string
+          format: date-time
+          examples: ["2026-07-09T16:56:00Z"]
+
+
+
+        status:
+          type: string
+          enum:
+            - scheduled
+            - completed
+            - cancelled
+          examples: ["completed"]
+
     ScheduleSessionRequest:
       type: object
       required:
@@ -114,14 +175,18 @@ components:
         patient_id:
           type: string
           format: uuid
+          examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
 
         therapist_id:
           type: string
           format: uuid
+          examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
 
         session_date:
           type: string
           format: date-time
+          examples: ["2026-07-09T16:56:00Z"]
+
 
     RescheduleSessionRequest:
       type: object
@@ -132,11 +197,3 @@ components:
         session_date:
           type: string
           format: date-time
-
-    ScheduleSessionResponse:
-      type: object
-
-      properties:
-        session_id:
-          type: string
-          format: uuid

@@ -10,4 +10,9 @@ interface SessionRepository {
     public function update(Session $session) : void;
 
     public function findById(SessionId $id) : Session;
+
+    /**
+     * @return list<Session>
+     */
+    public function findAll(): array;
 }

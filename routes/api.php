@@ -19,3 +19,8 @@ Route::patch(
     '/sessions/{id}/reschedule',
     [SessionController::class, 'reschedule']
 );
+
+Route::get(
+    '/sessions',
+    [SessionController::class, 'index']
+);
