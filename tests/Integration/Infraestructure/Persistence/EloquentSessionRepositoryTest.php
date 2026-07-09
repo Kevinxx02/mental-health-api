@@ -10,12 +10,12 @@ use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
+use App\Domain\Session\Exceptions\SessionNotFoundException;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-final class EloquentSessionRepositoryTest extends TestCase
-{
+final class EloquentSessionRepositoryTest extends TestCase {
     use RefreshDatabase;
 
     private SessionRepository $repository;
@@ -84,10 +84,17 @@ final class EloquentSessionRepositoryTest extends TestCase
     }
 
     public function test_it_returns_null_when_session_does_not_exist() : void {
-        $session = $this->repository->findById(
-            SessionId::generate()
+        $sessionId = SessionId::generate();
+
+        $this->expectException(SessionNotFoundException::class);
+
+        $this->expectExceptionMessage(
+            sprintf(
+                'Session "%s" was not found.',
+                $sessionId->value()
+            )
         );
 
-        $this->assertNull($session);
+        $this->repository->findById($sessionId);
     }
 }
