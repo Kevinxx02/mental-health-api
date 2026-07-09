@@ -7,5 +7,7 @@ use App\Domain\Session\ValueObjects\SessionId;
 interface SessionRepository {
     public function save(Session $session) : void;
 
+    public function update(Session $session) : void;
+
     public function findById(SessionId $id) : Session;
 }

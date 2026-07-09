@@ -36,7 +36,7 @@ final class CompleteSessionHandlerTest extends TestCase {
 
         $repository
             ->expects($this->once())
-            ->method('save')
+            ->method('update')
             ->with($session);
 
         $handler = new CompleteSessionHandler($repository);

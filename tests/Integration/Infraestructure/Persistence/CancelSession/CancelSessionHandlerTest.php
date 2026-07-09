@@ -37,7 +37,7 @@ final class CancelSessionHandlerTest extends TestCase {
 
         $repository
             ->expects($this->once())
-            ->method('save')
+            ->method('update')
             ->with($session);
 
         $handler = new CancelSessionHandler($repository);
@@ -102,7 +102,7 @@ final class CancelSessionHandlerTest extends TestCase {
 
         $repository
             ->expects($this->never())
-            ->method('save');
+            ->method('update');
 
         $handler = new CancelSessionHandler($repository);
 
@@ -140,7 +140,7 @@ final class CancelSessionHandlerTest extends TestCase {
 
         $repository
             ->expects($this->never())
-            ->method('save');
+            ->method('update');
 
         $handler = new CancelSessionHandler($repository);
 
