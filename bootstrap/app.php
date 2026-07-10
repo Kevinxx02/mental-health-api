@@ -1,9 +1,14 @@
 <?php
 
+use App\Domain\Session\Exceptions\InvalidSessionDateException;
+use App\Domain\Session\Exceptions\InvalidSessionStateException;
+use App\Domain\Session\Exceptions\SessionNotFoundException;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,7 +21,43 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),
         );
-    })->create();
+
+        $exceptions->render(
+            function (SessionNotFoundException $e) {
+                return response()->json(
+                    [
+                        'message' => $e->getMessage(),
+                    ],
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+        );
+
+        $exceptions->render(
+            function (InvalidSessionStateException $e) {
+                return response()->json(
+                    [
+                        'message' => $e->getMessage(),
+                    ],
+                    Response::HTTP_CONFLICT
+                );
+            }
+        );
+
+        $exceptions->render(
+            function (InvalidSessionDateException $e) {
+                return response()->json(
+                    [
+                        'message' => $e->getMessage(),
+                    ],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+        );
+
+    })
+    ->create();
