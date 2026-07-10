@@ -21,3 +21,9 @@ WORKDIR /var/www/html
 
 COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY docker/apache/php.ini /usr/local/etc/php/php.ini
+
+COPY docker/apache/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]

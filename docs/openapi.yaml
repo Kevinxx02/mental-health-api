@@ -8,7 +8,6 @@ servers:
   - url: http://127.0.0.1:8000/api
 
 paths:
-
   /sessions:
     get:
       operationId: listSessions
@@ -49,6 +48,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Session'
 
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
   /sessions/{id}:
     get:
       operationId: showSession
@@ -64,15 +66,18 @@ paths:
 
       responses:
 
-        '200':
-          description: Therapy session found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Session'
+        '204':
+          $ref: '#/components/responses/NoContent'
 
         '404':
           $ref: '#/components/responses/NotFound'
+
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
   /sessions/{id}/complete:
     patch:
       tags:
@@ -89,6 +94,12 @@ paths:
         '204':
           $ref: '#/components/responses/NoContent'
 
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+        '409':
+          $ref: '#/components/responses/Conflict'
+
   /sessions/{id}/cancel:
     patch:
       tags:
@@ -104,6 +115,12 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+        '409':
+          $ref: '#/components/responses/Conflict'
 
   /sessions/{id}/reschedule:
     patch:
@@ -125,18 +142,45 @@ paths:
         - $ref: '#/components/parameters/SessionId'
 
       responses:
+
         '204':
           $ref: '#/components/responses/NoContent'
 
-components:
+        '404':
+          $ref: '#/components/responses/NotFound'
 
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+components:
   responses:
 
     NoContent:
       description: Operation completed successfully. No response body is returned.
 
     NotFound:
-      description: Session doesnt exist.
+      description: Session not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    ValidationError:
+      description: Validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+
+    Conflict:
+      description: The requested operation cannot be performed because the session is in an invalid state.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConflictError'
 
   parameters:
     SessionId:
@@ -150,6 +194,48 @@ components:
         examples: ["019f4631-5ea6-7324-afac-0f83b6e335bc"]
 
   schemas:
+
+    Error:
+      type: object
+      required:
+        - message
+
+      properties:
+        message:
+          type: string
+          examples:
+            - Session not found.
+
+    ValidationError:
+      type: object
+      required:
+        - message
+        - errors
+
+      properties:
+        message:
+          type: string
+          examples:
+            - The given data was invalid.
+
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+
+    ConflictError:
+      type: object
+      required:
+        - message
+
+      properties:
+        message:
+          type: string
+          examples:
+            - Session has already been completed.
+
     Session:
       type: object
 
@@ -179,7 +265,7 @@ components:
         session_date:
           type: string
           format: date-time
-          examples: ["2026-07-09T16:56:00Z"]
+          examples: ["2026-07-15T17:00:00Z"]
 
 
 
@@ -212,7 +298,7 @@ components:
         session_date:
           type: string
           format: date-time
-          examples: ["2026-07-09T16:56:00Z"]
+          examples: ["2026-07-09T17:00:00Z"]
 
 
     RescheduleSessionRequest:
@@ -224,3 +310,4 @@ components:
         session_date:
           type: string
           format: date-time
+          examples: ["2026-07-09T17:00:00Z"]
