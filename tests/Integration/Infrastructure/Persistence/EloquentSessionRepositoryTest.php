@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Infraestructure\Persistence;
+namespace Tests\Integration\Infrastructure\Persistence;
 
 use App\Domain\Session\Entities\Session;
 use App\Domain\Session\Repositories\SessionRepository;

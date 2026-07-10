@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Infraestructure\Persistence\ListSession;
+namespace Tests\Unit\Application\Session\ListSessions;
 
-use App\Application\Session\ListSession\ListSessionsHandler;
+use App\Application\Session\ListSessions\ListSessionsHandler;
 use App\Domain\Session\Entities\Session;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
