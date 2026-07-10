@@ -14,16 +14,16 @@ use App\Application\Session\ListSessions\ListSessionsHandler;
 use App\Http\Resources\SessionResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
-use App\Http\Requests\ScheduleSessionRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\RescheduleSessionRequest;
+
 
 final class RescheduleSessionController extends Controller {
     public function __construct(private readonly RescheduleSessionHandler $handler) {}
 
     public function reschedule(
-        Request $request,
+        RescheduleSessionRequest $request,
         string $id,
         RescheduleSessionHandler $handler,
     ) : JsonResponse {

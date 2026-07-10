@@ -16,7 +16,7 @@ final class ShowSessionController extends Controller {
 
     public function show(
         string $id
-    ): SessionResource {
+    ) : SessionResource {
 
         return new SessionResource(
             ($this->handler)(
