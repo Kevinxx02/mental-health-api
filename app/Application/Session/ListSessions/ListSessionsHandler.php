@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Session\ListSession;
+namespace App\Application\Session\ListSessions;
 
 use App\Domain\Session\Repositories\SessionRepository;
+use App\Domain\Session\Entities\Session;
 
 final readonly class ListSessionsHandler {
     public function __construct(

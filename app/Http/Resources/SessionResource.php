@@ -15,4 +15,18 @@ final class SessionResource extends JsonResource {
             'status' => $this->status()->value,
         ];
     }
+
+    public function show(
+        string $id,
+        ShowSessionHandler $handler
+    ): SessionResource {
+
+        return new SessionResource(
+            $handler(
+                new ShowSessionQuery($id)
+            )
+        );
+    }
 }
+
+
