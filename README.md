@@ -1,25 +1,27 @@
 # Mental Health API
 
-REST API for managing therapy sessions, built with Laravel following Domain-Driven Design (DDD) principles.
+RESTful API for managing therapy sessions built with Laravel 13 following Domain-Driven Design (DDD) and Clean Architecture principles.
+
+The project demonstrates the implementation of a rich domain model, application use cases, repository abstraction, Docker-based development environment, automated application setup and OpenAPI 3.1 documentation.
 
 ## Features
 
-* Schedule a therapy session
-* Complete a session
-* Cancel a session
-* Reschedule a session
-* Retrieve a session
-* List all sessions
+- Schedule a therapy session
+- Complete a therapy session
+- Cancel a therapy session
+- Reschedule a therapy session
+- Retrieve a therapy session
+- List all therapy sessions
 
 ## Tech Stack
 
-* PHP 8.3
-* Laravel 13
-* MariaDB 11
-* Apache
-* Docker & Docker Compose
-* PHPUnit
-* OpenAPI 3.1
+- PHP 8.3
+- Laravel 13
+- MariaDB 11
+- Apache
+- Docker & Docker Compose
+- PHPUnit
+- OpenAPI 3.1 (Swagger UI)
 
 ---
 
@@ -27,8 +29,8 @@ REST API for managing therapy sessions, built with Laravel following Domain-Driv
 
 The following software must be installed:
 
-* Docker
-* Docker Compose
+- Docker
+- Docker Compose
 
 No local installation of PHP, Composer or MariaDB is required.
 
@@ -36,48 +38,30 @@ No local installation of PHP, Composer or MariaDB is required.
 
 # Installation
 
-Clone the repository:
+Clone the repository and start the containers:
 
 ```bash
 git clone <repository-url>
 cd mental-health-api
-```
-
-Copy the environment file:
-
-```bash
 cp .env.example .env
-```
-
-Build and start the containers:
-
-```bash
 docker compose up --build -d
 ```
 
-Install PHP dependencies:
+During the first startup the application automatically:
 
-```bash
-docker compose exec app composer install
-```
+- Installs Composer dependencies
+- Generates the Laravel application key
+- Waits for MariaDB to become available
+- Executes the database migrations
+- Starts Apache
 
-Generate the Laravel application key:
-
-```bash
-docker compose exec app php artisan key:generate
-```
-
-Run the database migrations:
-
-```bash
-docker compose exec app php artisan migrate
-```
+Once the containers are running, the API is ready to use.
 
 ---
 
 # Accessing the API
 
-The application will be available at:
+Base URL:
 
 ```
 http://localhost:8000
@@ -91,9 +75,30 @@ GET http://localhost:8000/api/sessions
 
 ---
 
-# Running Tests
+# API Documentation
 
-Execute the complete test suite:
+Interactive Swagger UI documentation is available at:
+
+```
+http://localhost:8000/docs
+```
+
+The raw OpenAPI specification is located at:
+
+```
+docs/openapi.yaml
+```
+
+---
+
+# Testing
+
+The project includes:
+
+- Unit tests
+- Integration tests
+
+Run the complete test suite:
 
 ```bash
 docker compose exec app php artisan test
@@ -101,64 +106,74 @@ docker compose exec app php artisan test
 
 ---
 
-# API Documentation
-
-The OpenAPI specification is located at:
-
-```
-docs/openapi.yaml
-```
-
-It can be opened using Swagger UI or any OpenAPI-compatible tool.
-
----
-
 # Project Structure
 
 ```
-app/
- ├── Application
- ├── Domain
- ├── Infrastructure
- └── Http
+app
+├── Application
+│   └── Application use cases
+├── Domain
+│   ├── Entities
+│   ├── Exceptions
+│   ├── Repositories
+│   └── Value Objects
+├── Infrastructure
+│   └── Persistence
+└── Http
+    ├── Controllers
+    ├── Requests
+    └── Resources
 ```
-
-The project follows a layered Domain-Driven Design architecture:
-
-* Domain contains the business rules.
-* Application contains the use cases.
-* Infrastructure contains persistence implementations.
-* Http contains controllers, requests and resources.
 
 ---
 
-# Useful Commands
+# Design Principles
 
-Restart containers:
+This project follows:
+
+- Domain-Driven Design (DDD)
+- Clean Architecture
+- SOLID Principles
+- Repository Pattern
+- Dependency Injection
+- Value Objects
+- Rich Domain Model
+
+---
+
+# Development Commands
+
+Start the containers:
 
 ```bash
-docker compose restart
+docker compose up -d
 ```
 
-Stop containers:
-
-```bash
-docker compose down
-```
-
-Remove containers and database volume:
-
-```bash
-docker compose down --volumes --remove-orphans
-```
-
-Rebuild containers:
+Rebuild the containers:
 
 ```bash
 docker compose up --build -d
 ```
 
-Run migrations:
+Stop the containers:
+
+```bash
+docker compose down
+```
+
+Stop the containers and remove the database volume:
+
+```bash
+docker compose down --volumes --remove-orphans
+```
+
+Restart the containers:
+
+```bash
+docker compose restart
+```
+
+Run database migrations:
 
 ```bash
 docker compose exec app php artisan migrate
@@ -175,3 +190,34 @@ Clear Laravel caches:
 ```bash
 docker compose exec app php artisan optimize:clear
 ```
+
+Open a shell inside the application container:
+
+```bash
+docker compose exec app bash
+```
+
+---
+
+# Roadmap
+
+- [x] Schedule session
+- [x] Complete session
+- [x] Cancel session
+- [x] Reschedule session
+- [x] Retrieve a session
+- [x] List all sessions
+- [x] Dockerized development environment
+- [x] Swagger UI integration
+- [ ] Authentication
+- [ ] Pagination
+- [ ] Filtering
+- [ ] CI/CD Pipeline
+- [ ] Static Analysis (PHPStan)
+- [ ] Code Coverage Reports
+
+---
+
+# License
+
+This project is intended for educational and portfolio purposes.
