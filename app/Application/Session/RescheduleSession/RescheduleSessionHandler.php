@@ -11,7 +11,7 @@ use DateTimeImmutable;
 
 final readonly class RescheduleSessionHandler {
     public function __construct(
-        private SessionRepository $repository,
+        private SessionRepository $repository
     ) {}
 
     public function __invoke(RescheduleSessionCommand $command) : void {
@@ -25,6 +25,6 @@ final readonly class RescheduleSessionHandler {
             )
         );
 
-        $this->repository->save($session);
+        $this->repository->update($session);
     }
 }

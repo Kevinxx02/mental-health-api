@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Mappers;
+namespace App\Infrastructure\Persistence\Eloquent\Mappers;
 
 use DateTimeImmutable;
 

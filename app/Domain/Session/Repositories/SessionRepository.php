@@ -14,5 +14,5 @@ interface SessionRepository {
     /**
      * @return list<Session>
      */
-    public function findAll(): array;
+    public function findAll() : array;
 }

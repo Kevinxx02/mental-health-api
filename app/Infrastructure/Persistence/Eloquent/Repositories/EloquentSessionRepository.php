@@ -13,7 +13,7 @@ use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
 use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
-use App\Mappers\SessionMapper;
+use App\Infrastructure\Persistence\Eloquent\Mappers\SessionMapper;
 use DateTimeImmutable;
 use Illuminate\Support\Facades\DB;
 

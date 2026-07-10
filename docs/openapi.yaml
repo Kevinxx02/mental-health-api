@@ -49,6 +49,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/Session'
 
+  /sessions/{id}:
+    get:
+      operationId: showSession
+      tags:
+        - Sessions
+
+      summary: Retrieve a therapy session.
+
+      description: Returns a therapy session by its identifier.
+
+      parameters:
+        - $ref: '#/components/parameters/SessionId'
+
+      responses:
+
+        '200':
+          description: Therapy session found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+
+        '404':
+          $ref: '#/components/responses/NotFound'
   /sessions/{id}/complete:
     patch:
       tags:
@@ -110,6 +134,9 @@ components:
 
     NoContent:
       description: Operation completed successfully. No response body is returned.
+
+    NotFound:
+      description: Session doesnt exist.
 
   parameters:
     SessionId:
