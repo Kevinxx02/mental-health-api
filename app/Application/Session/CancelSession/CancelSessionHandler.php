@@ -24,12 +24,6 @@ final readonly class CancelSessionHandler
             $sessionId
         );
 
-        if ($session === null) {
-            throw SessionNotFoundException::fromId(
-                $sessionId
-            );
-        }
-
         $session->cancel();
 
         $this->repository->update($session);

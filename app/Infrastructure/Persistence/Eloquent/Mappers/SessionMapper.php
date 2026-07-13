@@ -22,11 +22,7 @@ final class SessionMapper
             SessionId::fromString($model->id),
             PatientId::fromString($model->patient_id),
             TherapistId::fromString($model->therapist_id),
-            SessionDate::fromDateTime(
-                new DateTimeImmutable(
-                    $model->session_date->toDateTimeString()
-                )
-            ),
+            SessionDate::fromDateTime($model->session_date),
             SessionStatus::from($model->status)
         );
     }

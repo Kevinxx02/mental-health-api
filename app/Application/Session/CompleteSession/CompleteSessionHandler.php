@@ -24,12 +24,6 @@ final readonly class CompleteSessionHandler
             $sessionId
         );
 
-        if ($session === null) {
-            throw SessionNotFoundException::fromId(
-                $sessionId
-            );
-        }
-
         $session->complete();
 
         $this->repository->update($session);

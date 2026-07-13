@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CancelSessionController extends Controller
 {
-    public function __construct(private readonly CancelSessionHandler $handler) {}
-
     public function cancel(
         string $id,
         CancelSessionHandler $handler

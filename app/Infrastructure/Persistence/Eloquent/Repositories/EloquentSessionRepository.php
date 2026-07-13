@@ -15,6 +15,8 @@ use App\Domain\Session\ValueObjects\TherapistId;
 use App\Infrastructure\Persistence\Eloquent\Mappers\SessionMapper;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
 use DateTimeImmutable;
+use DateTime;
+use Illuminate\Support\Carbon;
 
 final readonly class EloquentSessionRepository implements SessionRepository
 {
@@ -28,7 +30,11 @@ final readonly class EloquentSessionRepository implements SessionRepository
         $model->id = $session->id()->value();
         $model->patient_id = $session->patientId()->value();
         $model->therapist_id = $session->therapistId()->value();
-        $model->session_date = $session->sessionDate()->value();
+        $model->session_date = Carbon::instance(
+            DateTime::createFromImmutable(
+                $session->sessionDate()->value()
+            )
+        );
         $model->status = $session->status()->value;
 
         $model->save();
@@ -38,9 +44,17 @@ final readonly class EloquentSessionRepository implements SessionRepository
     {
         $model = $this->model->find($session->id()->value());
 
+        if ($model === null) {
+            throw SessionNotFoundException::fromId($session->id());
+        }
+
         $model->patient_id = $session->patientId()->value();
-        $model->therapist_id = $session->therapistId()->value();
-        $model->session_date = $session->sessionDate()->value();
+        $model->therapist_id =$session->therapistId()->value();
+        $model->session_date = Carbon::instance(
+            DateTime::createFromImmutable(
+                $session->sessionDate()->value()
+            )
+        );
         $model->status = $session->status()->value;
 
         $model->save();
@@ -60,23 +74,22 @@ final readonly class EloquentSessionRepository implements SessionRepository
             SessionId::fromString($model->id),
             PatientId::fromString($model->patient_id),
             TherapistId::fromString($model->therapist_id),
-            SessionDate::fromDateTime(
-                new DateTimeImmutable(
-                    $model->session_date->format('Y-m-d H:i:s')
-                )
-            ),
+            SessionDate::fromDateTime($model->session_date),
             SessionStatus::from($model->status),
         );
     }
 
+    /**
+     * @return list<Session>
+     */
     public function findAll(): array
     {
-        return SessionModel::query()
-            ->orderBy('session_date')
-            ->get()
-            ->map(
-                SessionMapper::toDomain(...)
-            )
-            ->all();
+        return array_values(
+            SessionModel::query()
+                ->orderBy('session_date')
+                ->get()
+                ->map(SessionMapper::toDomain(...))
+                ->all()
+        );
     }
 }

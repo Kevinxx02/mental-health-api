@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class RescheduleSessionController extends Controller
 {
-    public function __construct(private readonly RescheduleSessionHandler $handler) {}
-
     public function reschedule(
         RescheduleSessionRequest $request,
         string $id,

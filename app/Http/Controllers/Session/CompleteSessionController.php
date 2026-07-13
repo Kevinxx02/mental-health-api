@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CompleteSessionController extends Controller
 {
-    public function __construct(private readonly CompleteSessionHandler $handler) {}
-
     public function complete(
         string $id,
         CompleteSessionHandler $handler

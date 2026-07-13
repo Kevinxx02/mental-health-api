@@ -12,8 +12,12 @@ final readonly class SessionDate
 {
     private function __construct(private DateTimeImmutable $value) {}
 
-    public static function fromDateTime(DateTimeImmutable $date): self
+    public static function fromDateTime(DateTimeInterface $date): self
     {
+        $date = $date instanceof DateTimeImmutable
+            ? $date
+            : DateTimeImmutable::createFromMutable($date);
+
         self::ensureIsNotPast($date);
         self::ensureBusinessHours($date);
         self::ensureThirtyMinuteSlot($date);
