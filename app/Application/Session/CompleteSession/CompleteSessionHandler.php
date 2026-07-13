@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Session\CompleteSession;
 
-use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionId;
 

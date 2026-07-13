@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Eloquent\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+
 /**
- * @property \Illuminate\Support\Carbon $session_date
+ * @property Carbon $session_date
  */
 final class SessionModel extends Model
 {

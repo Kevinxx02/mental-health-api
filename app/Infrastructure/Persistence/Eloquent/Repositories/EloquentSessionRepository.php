@@ -14,7 +14,6 @@ use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
 use App\Infrastructure\Persistence\Eloquent\Mappers\SessionMapper;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
-use DateTimeImmutable;
 use DateTime;
 use Illuminate\Support\Carbon;
 
@@ -49,7 +48,7 @@ final readonly class EloquentSessionRepository implements SessionRepository
         }
 
         $model->patient_id = $session->patientId()->value();
-        $model->therapist_id =$session->therapistId()->value();
+        $model->therapist_id = $session->therapistId()->value();
         $model->session_date = Carbon::instance(
             DateTime::createFromImmutable(
                 $session->sessionDate()->value()

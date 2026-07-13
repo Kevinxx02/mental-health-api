@@ -11,7 +11,6 @@ use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
 use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
-use DateTimeImmutable;
 
 final class SessionMapper
 {

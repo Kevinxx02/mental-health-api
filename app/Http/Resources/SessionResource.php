@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Application\Session;
-use App\Application\Session\ShowSession\ShowSessionQuery;
 use App\Application\Session\ShowSession\ShowSessionHandler;
+use App\Application\Session\ShowSession\ShowSessionQuery;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 final class SessionResource extends JsonResource
 {
