@@ -88,3 +88,8 @@ jobs:
 
       - name: Run PHPStan
         run: ./vendor/bin/phpstan analyse --no-progress
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: pcov
