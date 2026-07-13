@@ -18,6 +18,7 @@
         "laravel/pint": "^1.27",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
+        "phpro/grumphp": "^2.22",
         "phpstan/phpstan": "^2.2",
         "phpunit/phpunit": "^12.5.12"
     },
@@ -34,6 +35,8 @@
         }
     },
     "scripts": {
+        "pint": "./vendor/bin/pint --test",
+        "phpstan": "./vendor/bin/phpstan analyse",
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -80,7 +83,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "phpro/grumphp": true
         }
     },
     "minimum-stability": "stable",

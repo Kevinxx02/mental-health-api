@@ -1,0 +1,7 @@
+grumphp:
+    tasks:
+        process:
+            commands:
+                - "./vendor/bin/pint --test"
+                - "./vendor/bin/phpstan analyse --no-progress"
+                - "php artisan test"
