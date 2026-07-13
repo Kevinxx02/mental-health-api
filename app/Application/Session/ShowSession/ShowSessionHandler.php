@@ -6,10 +6,10 @@ namespace App\Application\Session\ShowSession;
 
 use App\Domain\Session\Entities\Session;
 use App\Domain\Session\Repositories\SessionRepository;
-use App\Application\Session\ShowSession\ShowSessionQuery;
 use App\Domain\Session\ValueObjects\SessionId;
 
-final readonly class ShowSessionHandler {
+final readonly class ShowSessionHandler
+{
     public function __construct(
         private SessionRepository $repository
     ) {}

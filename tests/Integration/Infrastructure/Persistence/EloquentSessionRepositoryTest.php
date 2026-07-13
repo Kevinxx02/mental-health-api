@@ -5,28 +5,31 @@ declare(strict_types=1);
 namespace Tests\Integration\Infrastructure\Persistence;
 
 use App\Domain\Session\Entities\Session;
+use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Domain\Session\Repositories\SessionRepository;
-use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
+use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\TherapistId;
-use App\Domain\Session\Exceptions\SessionNotFoundException;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-final class EloquentSessionRepositoryTest extends TestCase {
+final class EloquentSessionRepositoryTest extends TestCase
+{
     use RefreshDatabase;
 
     private SessionRepository $repository;
 
-    protected function setUp() : void {
+    protected function setUp(): void
+    {
         parent::setUp();
 
         $this->repository = app(SessionRepository::class);
     }
 
-    public function test_it_saves_a_session() : void {
+    public function test_it_saves_a_session(): void
+    {
         $session = Session::schedule(
             PatientId::generate(),
             TherapistId::generate(),
@@ -45,7 +48,8 @@ final class EloquentSessionRepositoryTest extends TestCase {
         ]);
     }
 
-    public function test_it_finds_a_session_by_id() : void {
+    public function test_it_finds_a_session_by_id(): void
+    {
 
         $session = Session::schedule(
             PatientId::generate(),
@@ -83,7 +87,8 @@ final class EloquentSessionRepositoryTest extends TestCase {
         );
     }
 
-    public function test_it_returns_null_when_session_does_not_exist() : void {
+    public function test_it_returns_null_when_session_does_not_exist(): void
+    {
         $sessionId = SessionId::generate();
 
         $this->expectException(SessionNotFoundException::class);

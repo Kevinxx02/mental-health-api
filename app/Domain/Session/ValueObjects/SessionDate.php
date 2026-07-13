@@ -8,10 +8,12 @@ use App\Domain\Session\Exceptions\InvalidSessionDateException;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-final readonly class SessionDate {
+final readonly class SessionDate
+{
     private function __construct(private DateTimeImmutable $value) {}
 
-    public static function fromDateTime(DateTimeImmutable $date): self {
+    public static function fromDateTime(DateTimeImmutable $date): self
+    {
         self::ensureIsNotPast($date);
         self::ensureBusinessHours($date);
         self::ensureThirtyMinuteSlot($date);
@@ -19,25 +21,30 @@ final readonly class SessionDate {
         return new self($date);
     }
 
-    public function value(): DateTimeImmutable {
+    public function value(): DateTimeImmutable
+    {
         return $this->value;
     }
 
-    public function equals(self $other): bool {
+    public function equals(self $other): bool
+    {
         return $this->value == $other->value;
     }
 
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->value->format(DateTimeInterface::ATOM);
     }
 
-    private static function ensureIsNotPast(DateTimeImmutable $date): void {
-        if ($date < new DateTimeImmutable()) {
+    private static function ensureIsNotPast(DateTimeImmutable $date): void
+    {
+        if ($date < new DateTimeImmutable) {
             throw InvalidSessionDateException::pastDate();
         }
     }
 
-    private static function ensureBusinessHours(DateTimeImmutable $date): void {
+    private static function ensureBusinessHours(DateTimeImmutable $date): void
+    {
         $time = $date->format('H:i');
 
         $morning = $time >= '09:00' && $time <= '13:30';
@@ -48,7 +55,8 @@ final readonly class SessionDate {
         }
     }
 
-    private static function ensureThirtyMinuteSlot(DateTimeImmutable $date): void {
+    private static function ensureThirtyMinuteSlot(DateTimeImmutable $date): void
+    {
         $minutes = (int) $date->format('i');
 
         if (! in_array($minutes, [0, 30], true)) {

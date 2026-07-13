@@ -14,8 +14,10 @@ use App\Domain\Session\ValueObjects\TherapistId;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class SessionTest extends TestCase {
-    public function test_it_schedules_a_new_session(): void {
+final class SessionTest extends TestCase
+{
+    public function test_it_schedules_a_new_session(): void
+    {
         $session = $this->createSession();
 
         $this->assertInstanceOf(
@@ -44,7 +46,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    public function test_it_completes_a_scheduled_session(): void {
+    public function test_it_completes_a_scheduled_session(): void
+    {
         $session = $this->createSession();
 
         $session->complete();
@@ -55,7 +58,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_complete_an_already_completed_session(): void {
+    public function test_it_cannot_complete_an_already_completed_session(): void
+    {
         $session = $this->createSession();
 
         $session->complete();
@@ -71,7 +75,8 @@ final class SessionTest extends TestCase {
         $session->complete();
     }
 
-    public function test_it_cannot_complete_a_cancelled_session(): void {
+    public function test_it_cannot_complete_a_cancelled_session(): void
+    {
         $session = $this->createSession();
 
         $session->cancel();
@@ -87,7 +92,8 @@ final class SessionTest extends TestCase {
         $session->complete();
     }
 
-    public function test_it_cancels_a_scheduled_session(): void {
+    public function test_it_cancels_a_scheduled_session(): void
+    {
         $session = $this->createSession();
 
         $session->cancel();
@@ -98,7 +104,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_cancel_an_already_cancelled_session(): void {
+    public function test_it_cannot_cancel_an_already_cancelled_session(): void
+    {
         $session = $this->createSession();
 
         $session->cancel();
@@ -114,7 +121,8 @@ final class SessionTest extends TestCase {
         $session->cancel();
     }
 
-    public function test_it_cannot_cancel_a_completed_session(): void {
+    public function test_it_cannot_cancel_a_completed_session(): void
+    {
         $session = $this->createSession();
 
         $session->complete();
@@ -130,7 +138,8 @@ final class SessionTest extends TestCase {
         $session->cancel();
     }
 
-    public function test_it_reschedules_a_scheduled_session(): void {
+    public function test_it_reschedules_a_scheduled_session(): void
+    {
         $session = $this->createSession();
 
         $newDate = SessionDate::fromDateTime(
@@ -144,7 +153,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_reschedule_a_completed_session(): void {
+    public function test_it_cannot_reschedule_a_completed_session(): void
+    {
         $session = $this->createSession();
 
         $session->complete();
@@ -164,7 +174,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_reschedule_a_cancelled_session(): void {
+    public function test_it_cannot_reschedule_a_cancelled_session(): void
+    {
         $session = $this->createSession();
 
         $session->cancel();
@@ -184,7 +195,8 @@ final class SessionTest extends TestCase {
         );
     }
 
-    private function createSession(): Session {
+    private function createSession(): Session
+    {
         return Session::schedule(
             PatientId::generate(),
             TherapistId::generate(),

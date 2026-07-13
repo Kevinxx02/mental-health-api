@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Session;
 
-use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Response;
-
 use App\Application\Session\CompleteSession\CompleteSessionCommand;
 use App\Application\Session\CompleteSession\CompleteSessionHandler;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-final class CompleteSessionController extends Controller {
+final class CompleteSessionController extends Controller
+{
     public function __construct(private readonly CompleteSessionHandler $handler) {}
 
     public function complete(
         string $id,
         CompleteSessionHandler $handler
-    ) : JsonResponse {
+    ): JsonResponse {
 
         $handler(
             new CompleteSessionCommand($id)

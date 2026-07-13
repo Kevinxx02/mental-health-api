@@ -10,12 +10,13 @@ use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
-
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class ListSessionsHandlerTest extends TestCase {
-    public function test_it_returns_all_sessions() : void {
+final class ListSessionsHandlerTest extends TestCase
+{
+    public function test_it_returns_all_sessions(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $sessions = [
@@ -39,7 +40,8 @@ final class ListSessionsHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_returns_an_empty_array_when_there_are_no_sessions() : void {
+    public function test_it_returns_an_empty_array_when_there_are_no_sessions(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository
@@ -55,7 +57,8 @@ final class ListSessionsHandlerTest extends TestCase {
         );
     }
 
-    private function createSession() : Session {
+    private function createSession(): Session
+    {
         return Session::schedule(
             PatientId::generate(),
             TherapistId::generate(),

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Session\ShowSession;
 
-use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-
 use App\Application\Session\ShowSession\ShowSessionHandler;
 use App\Application\Session\ShowSession\ShowSessionQuery;
 use App\Domain\Session\Entities\Session;
@@ -16,9 +13,13 @@ use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\TherapistId;
+use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 
-final class ShowSessionHandlerTest extends TestCase {
-    public function test_it_returns_a_session() : void {
+final class ShowSessionHandlerTest extends TestCase
+{
+    public function test_it_returns_a_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = Session::schedule(
@@ -53,7 +54,8 @@ final class ShowSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_throws_when_session_does_not_exist() : void {
+    public function test_it_throws_when_session_does_not_exist(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $sessionId = SessionId::generate();

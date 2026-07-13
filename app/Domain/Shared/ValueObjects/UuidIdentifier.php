@@ -12,8 +12,7 @@ abstract readonly class UuidIdentifier
 {
     protected function __construct(
         protected UuidInterface $value,
-    ) {
-    }
+    ) {}
 
     public static function generate(): static
     {

@@ -17,8 +17,10 @@ use App\Domain\Session\ValueObjects\TherapistId;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class CompleteSessionHandlerTest extends TestCase {
-    public function test_it_completes_a_session() : void {
+final class CompleteSessionHandlerTest extends TestCase
+{
+    public function test_it_completes_a_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = Session::schedule(
@@ -53,7 +55,8 @@ final class CompleteSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_throws_when_session_does_not_exist() : void {
+    public function test_it_throws_when_session_does_not_exist(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository

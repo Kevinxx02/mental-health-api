@@ -12,7 +12,8 @@ use PHPUnit\Framework\TestCase;
 
 final class ScheduleSessionHandlerTest extends TestCase
 {
-    public function test_it_saves_a_new_session() : void {
+    public function test_it_saves_a_new_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository
@@ -30,7 +31,8 @@ final class ScheduleSessionHandlerTest extends TestCase
         $handler($command);
     }
 
-    public function test_it_creates_a_session_using_command_data() : void {
+    public function test_it_creates_a_session_using_command_data(): void
+    {
         $capturedSession = null;
 
         $repository = $this->createMock(SessionRepository::class);
@@ -78,7 +80,8 @@ final class ScheduleSessionHandlerTest extends TestCase
         );
     }
 
-    public function test_it_propagates_repository_exceptions() : void {
+    public function test_it_propagates_repository_exceptions(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository

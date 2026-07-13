@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up() : void {
+    public function up(): void
+    {
         Schema::create('sessions', function (Blueprint $table): void {
             $table->char('id', 36)->primary();
 
@@ -31,7 +32,8 @@ return new class extends Migration
         });
     }
 
-    public function down() : void {
+    public function down(): void
+    {
         Schema::dropIfExists('sessions');
     }
 };

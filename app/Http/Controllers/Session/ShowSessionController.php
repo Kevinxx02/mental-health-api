@@ -9,14 +9,15 @@ use App\Application\Session\ShowSession\ShowSessionQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SessionResource;
 
-final class ShowSessionController extends Controller {
+final class ShowSessionController extends Controller
+{
     public function __construct(
         private readonly ShowSessionHandler $handler,
     ) {}
 
     public function show(
         string $id
-    ) : SessionResource {
+    ): SessionResource {
 
         return new SessionResource(
             ($this->handler)(

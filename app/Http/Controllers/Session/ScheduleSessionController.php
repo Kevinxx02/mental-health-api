@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Session;
 
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\JsonResponse;
-use App\Http\Requests\ScheduleSessionRequest;
-use Symfony\Component\HttpFoundation\Response;
-
 use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
 use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ScheduleSessionRequest;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-final class ScheduleSessionController extends Controller {
+final class ScheduleSessionController extends Controller
+{
     public function __construct(
         private readonly ScheduleSessionHandler $handler,
     ) {}
 
     public function store(
         ScheduleSessionRequest $request
-    ) : JsonResponse {
+    ): JsonResponse {
         $response = ($this->handler)(
             new ScheduleSessionCommand(
                 patientId: $request->string('patient_id')->toString(),
@@ -31,7 +30,7 @@ final class ScheduleSessionController extends Controller {
 
         return response()->json(
             [
-                'session_id' => $response->sessionId
+                'session_id' => $response->sessionId,
             ],
             Response::HTTP_CREATED,
         );

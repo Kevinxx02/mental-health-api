@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\Session\ScheduleSessionController;
-use App\Http\Controllers\Session\CompleteSessionController;
 use App\Http\Controllers\Session\CancelSessionController;
-use App\Http\Controllers\Session\RescheduleSessionController;
+use App\Http\Controllers\Session\CompleteSessionController;
 use App\Http\Controllers\Session\ListSessionsController;
+use App\Http\Controllers\Session\RescheduleSessionController;
+use App\Http\Controllers\Session\ScheduleSessionController;
 use App\Http\Controllers\Session\ShowSessionController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::post(

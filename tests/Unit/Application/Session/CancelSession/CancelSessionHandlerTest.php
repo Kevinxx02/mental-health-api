@@ -18,8 +18,10 @@ use App\Domain\Session\ValueObjects\TherapistId;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class CancelSessionHandlerTest extends TestCase {
-    public function test_it_cancels_a_session() : void {
+final class CancelSessionHandlerTest extends TestCase
+{
+    public function test_it_cancels_a_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = Session::schedule(
@@ -54,7 +56,8 @@ final class CancelSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_throws_when_session_does_not_exist() : void {
+    public function test_it_throws_when_session_does_not_exist(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository
@@ -83,7 +86,8 @@ final class CancelSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_cancel_a_completed_session() : void {
+    public function test_it_cannot_cancel_a_completed_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = Session::schedule(
@@ -121,7 +125,8 @@ final class CancelSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_cancel_an_already_cancelled_session() : void {
+    public function test_it_cannot_cancel_an_already_cancelled_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = Session::schedule(

@@ -8,16 +8,16 @@ use App\Domain\Session\Entities\Session;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
-use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\TherapistId;
 use DateTimeImmutable;
 
-final readonly class ScheduleSessionHandler {
+final readonly class ScheduleSessionHandler
+{
     public function __construct(private SessionRepository $repository) {}
 
     public function __invoke(
         ScheduleSessionCommand $command
-    ) : ScheduleSessionResponse {
+    ): ScheduleSessionResponse {
         $session = Session::schedule(
             PatientId::fromString($command->patientId),
             TherapistId::fromString($command->therapistId),

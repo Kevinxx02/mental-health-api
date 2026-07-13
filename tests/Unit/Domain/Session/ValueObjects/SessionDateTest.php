@@ -9,7 +9,8 @@ use App\Domain\Session\ValueObjects\SessionDate;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class SessionDateTest extends TestCase {
+final class SessionDateTest extends TestCase
+{
     public function test_it_creates_a_valid_session_date(): void
     {
         $date = new DateTimeImmutable('tomorrow 09:00');

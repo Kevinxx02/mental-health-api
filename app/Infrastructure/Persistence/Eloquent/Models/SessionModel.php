@@ -6,7 +6,8 @@ namespace App\Infrastructure\Persistence\Eloquent\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class SessionModel extends Model {
+final class SessionModel extends Model
+{
     protected $table = 'sessions';
 
     public $incrementing = false;
@@ -15,7 +16,8 @@ final class SessionModel extends Model {
 
     public $timestamps = false;
 
-    protected function casts() : array {
+    protected function casts(): array
+    {
         return [
             'session_date' => 'datetime',
         ];

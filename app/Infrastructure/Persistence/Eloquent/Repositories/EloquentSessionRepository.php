@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Eloquent\Repositories;
 
 use App\Domain\Session\Entities\Session;
+use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
-use App\Domain\Session\Exceptions\SessionNotFoundException;
-use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
 use App\Infrastructure\Persistence\Eloquent\Mappers\SessionMapper;
+use App\Infrastructure\Persistence\Eloquent\Models\SessionModel;
 use DateTimeImmutable;
-use Illuminate\Support\Facades\DB;
 
-final readonly class EloquentSessionRepository
-    implements SessionRepository {
-
+final readonly class EloquentSessionRepository implements SessionRepository
+{
     public function __construct(private SessionModel $model) {}
 
-    public function save(Session $session) : void {
+    public function save(Session $session): void
+    {
 
         $model = $this->model->newInstance();
 
@@ -35,7 +34,8 @@ final readonly class EloquentSessionRepository
         $model->save();
     }
 
-    public function update(Session $session) : void {
+    public function update(Session $session): void
+    {
         $model = $this->model->find($session->id()->value());
 
         $model->patient_id = $session->patientId()->value();
@@ -46,7 +46,8 @@ final readonly class EloquentSessionRepository
         $model->save();
     }
 
-    public function findById(SessionId $id) : Session {
+    public function findById(SessionId $id): Session
+    {
         $model = $this->model
             ->newQuery()
             ->find($id->value());
@@ -60,14 +61,16 @@ final readonly class EloquentSessionRepository
             PatientId::fromString($model->patient_id),
             TherapistId::fromString($model->therapist_id),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable(
+                new DateTimeImmutable(
                     $model->session_date->format('Y-m-d H:i:s')
                 )
             ),
             SessionStatus::from($model->status),
         );
     }
-    public function findAll() : array {
+
+    public function findAll(): array
+    {
         return SessionModel::query()
             ->orderBy('session_date')
             ->get()

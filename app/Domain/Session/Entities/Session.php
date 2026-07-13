@@ -11,7 +11,8 @@ use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\SessionStatus;
 use App\Domain\Session\ValueObjects\TherapistId;
 
-final class Session {
+final class Session
+{
     private function __construct(
         private readonly SessionId $id,
         private readonly PatientId $patientId,
@@ -24,7 +25,7 @@ final class Session {
         PatientId $patientId,
         TherapistId $therapistId,
         SessionDate $sessionDate
-    ) : self {
+    ): self {
         $sessionId = SessionId::generate();
 
         return new self(
@@ -42,7 +43,7 @@ final class Session {
         TherapistId $therapistId,
         SessionDate $sessionDate,
         SessionStatus $status
-    ) : self {
+    ): self {
         return new self(
             id: $id,
             patientId: $patientId,
@@ -52,7 +53,8 @@ final class Session {
         );
     }
 
-    public function complete() : void {
+    public function complete(): void
+    {
         if ($this->status->isCompleted()) {
             throw InvalidSessionStateException::alreadyCompleted();
         }
@@ -64,7 +66,8 @@ final class Session {
         $this->status = SessionStatus::Completed;
     }
 
-    public function cancel() : void {
+    public function cancel(): void
+    {
         if ($this->status->isCancelled()) {
             throw InvalidSessionStateException::alreadyCancelled();
         }
@@ -76,7 +79,8 @@ final class Session {
         $this->status = SessionStatus::Cancelled;
     }
 
-    public function reschedule(SessionDate $newDate) : void {
+    public function reschedule(SessionDate $newDate): void
+    {
         if ($this->status->isCompleted()) {
             throw InvalidSessionStateException::cannotRescheduleCompletedSession();
         }
@@ -88,23 +92,28 @@ final class Session {
         $this->sessionDate = $newDate;
     }
 
-    public function id() : SessionId {
+    public function id(): SessionId
+    {
         return $this->id;
     }
 
-    public function patientId() : PatientId {
+    public function patientId(): PatientId
+    {
         return $this->patientId;
     }
 
-    public function therapistId() : TherapistId {
+    public function therapistId(): TherapistId
+    {
         return $this->therapistId;
     }
 
-    public function sessionDate() : SessionDate {
+    public function sessionDate(): SessionDate
+    {
         return $this->sessionDate;
     }
 
-    public function status() : SessionStatus {
+    public function status(): SessionStatus
+    {
         return $this->status;
     }
 }

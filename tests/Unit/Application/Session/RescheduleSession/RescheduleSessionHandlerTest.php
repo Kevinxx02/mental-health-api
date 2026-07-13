@@ -17,8 +17,10 @@ use App\Domain\Session\ValueObjects\TherapistId;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class RescheduleSessionHandlerTest extends TestCase {
-    public function test_it_reschedules_a_session() : void {
+final class RescheduleSessionHandlerTest extends TestCase
+{
+    public function test_it_reschedules_a_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = $this->createSession();
@@ -51,7 +53,8 @@ final class RescheduleSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_throws_when_session_does_not_exist() : void {
+    public function test_it_throws_when_session_does_not_exist(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $repository
@@ -81,7 +84,8 @@ final class RescheduleSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_reschedule_a_completed_session() : void {
+    public function test_it_cannot_reschedule_a_completed_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = $this->createSession();
@@ -114,7 +118,8 @@ final class RescheduleSessionHandlerTest extends TestCase {
         );
     }
 
-    public function test_it_cannot_reschedule_a_cancelled_session() : void {
+    public function test_it_cannot_reschedule_a_cancelled_session(): void
+    {
         $repository = $this->createMock(SessionRepository::class);
 
         $session = $this->createSession();
@@ -147,7 +152,8 @@ final class RescheduleSessionHandlerTest extends TestCase {
         );
     }
 
-    private function createSession() : Session {
+    private function createSession(): Session
+    {
         return Session::schedule(
             PatientId::generate(),
             TherapistId::generate(),

@@ -8,12 +8,14 @@ use App\Domain\Session\Exceptions\SessionNotFoundException;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionId;
 
-final readonly class CompleteSessionHandler {
+final readonly class CompleteSessionHandler
+{
     public function __construct(
         private SessionRepository $repository
     ) {}
 
-    public function __invoke(CompleteSessionCommand $command) : void {
+    public function __invoke(CompleteSessionCommand $command): void
+    {
         $sessionId = SessionId::fromString(
             $command->sessionId
         );
