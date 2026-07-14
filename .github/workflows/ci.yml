@@ -47,6 +47,11 @@ jobs:
           --password=secret \
           ping
 
+      - name: Inspect Docker network
+        run: |
+          docker network ls
+          docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
+
       - name: Show container status
         run: docker compose ps
 
