@@ -15,6 +15,10 @@ ADRs document significant architectural decisions made during the development of
 | ADR-005 | Accepted | Use Named Constructors for Entity Creation     |
 | ADR-006 | Accepted | Containerize the Development Environment       |
 | ADR-007 | Accepted | Use UUID v7 as Entity Identifiers              |
+| ADR-008 | Accepted | Static Analysis and Code Quality               |
+| ADR-009 | Accepted | Continuous Integration Pipeline                |
+| ADR-010 | Accepted | Accept PHP Metrics Architectural Warnings      |
+| ADR-011 | Accepted | Adopt Mutation Testing                         |
 
 ## ADR Structure
 

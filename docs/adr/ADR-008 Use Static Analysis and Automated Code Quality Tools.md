@@ -1,6 +1,8 @@
 # ADR-008: Use Static Analysis and Automated Code Quality Tools
 
-## Status **Accepted**
+## Status
+
+**Accepted**
 
 ## Context
 

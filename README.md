@@ -285,11 +285,11 @@ docker compose exec app php artisan test --coverage
 - [x] Static Analysis (PHPStan)
 - [x] Code Coverage Reports
 - [x] Mutation Testing (Infection PHP)
+- [x] Architecture Diagrams
+- [x] PHP Metrics Report
 
 ## Future Improvements
 
-- [ ] Architecture Diagrams
-- [ ] PHP Metrics Report
 - [ ] GitHub Release Workflow
 - [ ] Security Analysis (Composer Audit / CodeQL)
 - [ ] Project Badges

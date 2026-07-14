@@ -22,6 +22,7 @@
 /storage/pail
 /storage/infection
 /coverage
+/phpmetrics
 /vendor
 _ide_helper.php
 Homestead.json
