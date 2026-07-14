@@ -24,6 +24,11 @@ jobs:
       - name: Build application
         run: docker compose up --build -d
 
+      - name: Inspect Docker network
+        run: |
+          docker network ls
+          docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
+
       - name: Wait for database
         run: |
           until docker compose exec -T db mariadb-admin ping -h localhost --silent
@@ -46,12 +51,6 @@ jobs:
           --user=mental_health \
           --password=secret \
           ping
-
-      - name: Inspect Docker network
-        run: |
-          docker network ls
-          docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
-
       - name: Show container status
         run: docker compose ps
 
