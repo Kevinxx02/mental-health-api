@@ -1,0 +1,22 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+
+    "source": {
+        "directories": [
+            "app"
+        ]
+    },
+
+    "phpUnit": {
+        "configDir": "."
+    },
+
+    "minMsi": 85,
+    "minCoveredMsi": 95,
+
+    "logs": {
+        "text": "infection.log"
+    },
+
+    "tmpDir": "storage/infection"
+}

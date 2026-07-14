@@ -23,15 +23,15 @@ abstract readonly class UuidIdentifier
 
     public static function fromString(string $value): static
     {
-        if (! Uuid::isValid($value)) {
+        try {
+            return new static(
+                Uuid::fromString($value)
+            );
+        } catch (\Throwable) {
             throw new InvalidArgumentException(
                 'It must be a valid UUID.'
             );
         }
-
-        return new static(
-            Uuid::fromString($value)
-        );
     }
 
     public function value(): string

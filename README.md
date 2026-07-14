@@ -183,6 +183,7 @@ The project enforces code quality through multiple automated tools:
 - Code Coverage
 - GrumPHP pre-commit hooks
 - GitHub Actions Continuous Integration
+- Mutation Testing (Infection)
 
 Local commits are validated through GrumPHP pre-commit hooks, while GitHub Actions verifies every push and pull request.
 
@@ -283,6 +284,15 @@ docker compose exec app php artisan test --coverage
 - [x] Continuous Integration Pipeline
 - [x] Static Analysis (PHPStan)
 - [x] Code Coverage Reports
+- [x] Mutation Testing (Infection PHP)
+
+## Future Improvements
+
+- [ ] Architecture Diagrams
+- [ ] PHP Metrics Report
+- [ ] GitHub Release Workflow
+- [ ] Security Analysis (Composer Audit / CodeQL)
+- [ ] Project Badges
 
 ---
 
