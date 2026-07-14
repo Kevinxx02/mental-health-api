@@ -43,6 +43,27 @@ jobs:
       - name: Show database logs
         run: docker compose logs db
 
+      - name: Docker versions
+        run: |
+          docker --version
+          docker compose version
+
+      - name: Inspect containers
+        run: docker compose ps
+
+      - name: Show networks
+        run: docker network ls
+
+      - name: Inspect compose network
+        run: docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
+
+      - name: Resolve db
+        run: docker compose exec -T app getent hosts db
+
+      - name: Ping db
+        run: docker compose exec -T app ping -c 4 db
+
+
       - name: Test database connection from app
         run: |
           docker compose exec -T app which mariadb-admin
