@@ -57,6 +57,10 @@ jobs:
           free -h
           php -v
 
+      - name: Verify app container
+        run: |
+          docker compose ps
+
       - name: Run PHPStan
         run: docker compose exec -T app ./vendor/bin/phpstan analyse --no-progress
 
