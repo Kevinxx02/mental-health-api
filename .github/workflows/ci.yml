@@ -29,11 +29,11 @@ jobs:
           docker network ls
           docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
 
-      - name: Wait for database
+      - name: Wait for MariaDB health
         run: |
-          until docker compose exec -T db mariadb-admin ping -h localhost --silent
+          until [ "$(docker inspect -f '{{.State.Health.Status}}' mental-health-db)" = "healthy" ]
           do
-            echo "Waiting for database..."
+            echo "Waiting for MariaDB health..."
             sleep 2
           done
 
