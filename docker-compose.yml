@@ -19,6 +19,12 @@ services:
   db:
     image: mariadb:11
 
+    healthcheck:
+        test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-proot"]
+        interval: 5s
+        timeout: 5s
+        retries: 20
+
     container_name: mental-health-db
 
     restart: unless-stopped
