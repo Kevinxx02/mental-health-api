@@ -1,6 +1,8 @@
 # ADR-003: Use Repository Pattern for Persistence
 
-**Status:** Accepted
+## Status
+
+**Accepted**
 
 ## Context
 

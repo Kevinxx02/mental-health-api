@@ -1,8 +1,8 @@
 # Mental Health API
 
-RESTful API for managing therapy sessions built with Laravel 13 following Domain-Driven Design (DDD) and Clean Architecture principles.
+RESTful API for managing therapy sessions built with Laravel 13 using Domain-Driven Design (DDD), Clean Architecture and SOLID principles.
 
-The project demonstrates the implementation of a rich domain model, application use cases, repository abstraction, Docker-based development environment, automated application setup and OpenAPI 3.1 documentation.
+The project focuses on building production-quality backend software by combining rich domain modeling, automated quality gates, static analysis, automated testing, Dockerized development and Continuous Integration.
 
 ## Features
 
@@ -19,9 +19,14 @@ The project demonstrates the implementation of a rich domain model, application 
 - Laravel 13
 - MariaDB 11
 - Apache
-- Docker & Docker Compose
+- Docker
+- Docker Compose
 - PHPUnit
-- OpenAPI 3.1 (Swagger UI)
+- Laravel Pint
+- PHPStan + Larastan
+- GrumPHP
+- GitHub Actions
+- OpenAPI 3.1 (Swagger)
 
 ---
 
@@ -93,15 +98,22 @@ docs/openapi.yaml
 
 # Testing
 
-The project includes:
-
-- Unit tests
-- Integration tests
-
-Run the complete test suite:
+Run the test suite:
 
 ```bash
 docker compose exec app php artisan test
+```
+
+Generate code coverage:
+
+```bash
+docker compose exec app php artisan test --coverage
+```
+
+Generate an HTML coverage report:
+
+```bash
+docker compose exec app vendor/bin/phpunit --coverage-html coverage
 ```
 
 ---
@@ -109,20 +121,24 @@ docker compose exec app php artisan test
 # Project Structure
 
 ```
-app
-├── Application
-│   └── Application use cases
-├── Domain
-│   ├── Entities
-│   ├── Exceptions
-│   ├── Repositories
-│   └── Value Objects
-├── Infrastructure
-│   └── Persistence
-└── Http
-    ├── Controllers
-    ├── Requests
-    └── Resources
+App
+    Application
+        Commands
+        Queries
+        Handlers
+
+    Domain
+        Entities
+        ValueObjects
+        Exceptions
+        Repositories
+
+    Infrastructure
+        Persistence
+            Eloquent
+                Models
+                Repositories
+                Mappers
 ```
 
 ---
@@ -138,6 +154,37 @@ This project follows:
 - Dependency Injection
 - Value Objects
 - Rich Domain Model
+
+---
+
+## Continuous Integration
+
+GitHub Actions automatically validates every push and pull request.
+
+The pipeline performs:
+
+- Docker build
+- Dependency installation
+- Laravel Pint
+- PHPStan
+- PHPUnit
+- Code Coverage
+
+---
+
+## Quality Assurance
+
+The project enforces code quality through multiple automated tools:
+
+- Laravel Pint (PSR-12 code style)
+- PHPStan Level 8
+- Larastan
+- PHPUnit
+- Code Coverage
+- GrumPHP pre-commit hooks
+- GitHub Actions Continuous Integration
+
+Local commits are validated through GrumPHP pre-commit hooks, while GitHub Actions verifies every push and pull request.
 
 ---
 
@@ -197,6 +244,30 @@ Open a shell inside the application container:
 docker compose exec app bash
 ```
 
+Run Laravel Pint:
+
+```bash
+docker compose exec app ./vendor/bin/pint
+```
+
+Run PHPStan:
+
+```bash
+docker compose exec app ./vendor/bin/phpstan analyse
+```
+
+Run PHPUnit:
+
+```bash
+docker compose exec app php artisan test
+```
+
+Generate Coverage:
+
+```bash
+docker compose exec app php artisan test --coverage
+```
+
 ---
 
 # Roadmap
@@ -209,12 +280,18 @@ docker compose exec app bash
 - [x] List all sessions
 - [x] Dockerized development environment
 - [x] Swagger UI integration
-- [ ] Authentication
-- [ ] Pagination
-- [ ] Filtering
-- [ ] CI/CD Pipeline
-- [ ] Static Analysis (PHPStan)
-- [ ] Code Coverage Reports
+- [x] Continuous Integration Pipeline
+- [x] Static Analysis (PHPStan)
+- [x] Code Coverage Reports
+
+---
+
+## Documentation
+
+Detailed project documentation is available in the `docs` directory.
+
+- Project documentation: `docs/README.md`
+- OpenAPI specification: `docs/openapi.yaml`
 
 ---
 

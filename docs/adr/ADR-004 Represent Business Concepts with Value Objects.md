@@ -1,6 +1,8 @@
 # ADR-004: Represent Business Concepts with Value Objects
 
-**Status:** Accepted
+## Status
+
+**Accepted**
 
 ## Context
 

@@ -1,6 +1,8 @@
 # ADR-005: Use Named Constructors for Entity Creation
 
-**Status:** Accepted
+## Status
+
+**Accepted**
 
 ## Context
 
