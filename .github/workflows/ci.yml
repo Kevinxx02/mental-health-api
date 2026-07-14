@@ -44,9 +44,7 @@ jobs:
         run: docker compose exec -T app php artisan test --coverage
 
       - name: Run Mutation testing
-        run: docker compose exec -T app vendor/bin/infection \
-        --min-msi=95 \
-        --min-covered-msi=95
+        run: docker compose exec -T app vendor/bin/infection --min-msi=95 --min-covered-msi=95
 
       - name: Shutdown containers
         if: always()
