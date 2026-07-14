@@ -27,21 +27,23 @@ The architecture is based on the following principles:
 # Layered Architecture
 
 The application is divided into four primary layers.
+```mermaid
+flowchart TD
 
-```text
-                HTTP Request
-                     │
-                     ▼
-            Interface Layer
-                     │
-                     ▼
-          Application Layer
-                     │
-                     ▼
-             Domain Layer
-                     ▲
-                     │
-          Infrastructure Layer
+    Client["HTTP Client"]
+
+    Interface["Interface Layer<br/>(Controllers, Requests, Resources)"]
+
+    Application["Application Layer<br/>(Use Cases, DTOs)"]
+
+    Domain["Domain Layer<br/>(Entities, Value Objects, Repository Interfaces)"]
+
+    Infrastructure["Infrastructure Layer<br/>(Eloquent, MariaDB, External Services)"]
+
+    Client --> Interface
+    Interface --> Application
+    Application --> Domain
+    Infrastructure --> Domain
 ```
 
 Each layer has a single, well-defined responsibility.
@@ -148,17 +150,16 @@ Business decisions should never be implemented inside controllers.
 
 Dependencies always point toward the Domain.
 
-```text
-Interface
-      │
-      ▼
-Application
-      │
-      ▼
-Domain
-      ▲
-      │
-Infrastructure
+```mermaid
+flowchart BT
+
+    Domain
+
+    Application --> Domain
+
+    Interface --> Application
+
+    Infrastructure --> Domain
 ```
 
 The Domain never depends on any outer layer.
@@ -168,27 +169,35 @@ The Domain never depends on any outer layer.
 # Data Flow
 
 The expected execution flow is:
+```mermaid
+sequenceDiagram
 
-```text
-HTTP Request
-        │
-        ▼
-Controller
-        │
-        ▼
-Use Case
-        │
-        ▼
-Domain Entity
-        │
-        ▼
-Repository Interface
-        │
-        ▼
-Repository Implementation
-        │
-        ▼
-MariaDB
+participant Client
+participant Controller
+participant UseCase
+participant Domain
+participant Repository
+participant Database
+
+Client->>Controller: POST /api/sessions
+
+Controller->>UseCase: ScheduleSessionCommand
+
+UseCase->>Domain: Create Session
+
+Domain-->>UseCase: Session
+
+UseCase->>Repository: save(session)
+
+Repository->>Database: INSERT
+
+Database-->>Repository: Success
+
+Repository-->>UseCase: Session
+
+UseCase-->>Controller: Response DTO
+
+Controller-->>Client: HTTP 201
 ```
 
 Responses follow the reverse path.
@@ -224,6 +233,34 @@ In this project, the primary entity is:
 * Session
 
 Entities encapsulate business rules and protect their own invariants.
+
+---
+
+# Domain Diagram
+
+```mermaid
+classDiagram
+
+class Session{
+    +SessionId
+    +PatientId
+    +TherapistId
+    +SessionDate
+    +SessionStatus
+}
+
+class SessionId
+class PatientId
+class TherapistId
+class SessionDate
+class SessionStatus
+
+Session --> SessionId
+Session --> PatientId
+Session --> TherapistId
+Session --> SessionDate
+Session --> SessionStatus
+```
 
 ---
 
@@ -273,6 +310,28 @@ Persistence is considered an implementation detail.
 Business logic must never depend on Eloquent models.
 
 Repository implementations are responsible for translating between Domain Entities and persistence models.
+
+```mermaid
+flowchart TD
+
+app
+
+app --> Application
+app --> Domain
+app --> Infrastructure
+app --> Http
+
+Domain --> Entities
+Domain --> ValueObjects
+Domain --> Repositories
+Domain --> Exceptions
+
+Infrastructure --> Persistence
+
+Persistence --> Models
+Persistence --> Mappers
+Persistence --> RepositoriesImpl
+```
 
 ---
 
