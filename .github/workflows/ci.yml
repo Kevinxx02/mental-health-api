@@ -24,6 +24,14 @@ jobs:
       - name: Build application
         run: docker compose up --build -d
 
+      - name: Wait for database
+        run: |
+          until docker compose exec -T db mariadb-admin ping -h localhost --silent
+          do
+            echo "Waiting for database..."
+            sleep 2
+          done
+
       - name: Show containers
         run: docker compose ps
 
