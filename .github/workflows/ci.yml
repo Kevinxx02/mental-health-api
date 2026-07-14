@@ -60,10 +60,6 @@ jobs:
       - name: Resolve db
         run: docker compose exec -T app getent hosts db
 
-      - name: Ping db
-        run: docker compose exec -T app ping -c 4 db
-
-
       - name: Test database connection from app
         run: |
           docker compose exec -T app which mariadb-admin
