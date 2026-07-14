@@ -5,9 +5,9 @@ set -e
 echo "Waiting for MariaDB..."
 
 until mariadb-admin ping \
-    -h "$DB_HOST" \
-    -u "$DB_USERNAME" \
-    -p"$DB_PASSWORD" \
+    -h "db" \
+    -u "mental_health" \
+    -p"$ecret" \
     --silent
 do
     sleep 2
