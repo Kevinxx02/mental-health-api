@@ -34,9 +34,9 @@ jobs:
         run: |
           docker compose exec -T app which mariadb-admin
           docker compose exec -T app mariadb-admin ping \
-            -h db \
-            -u mental_health \
-            -psecret
+            -h "db" \
+            -u "mental_health" \
+            -p "secret"
 
       - name: Show container status
         run: docker compose ps
