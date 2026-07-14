@@ -13,25 +13,80 @@ on:
 
 jobs:
   quality:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v5
 
       - name: Build application
         run: docker compose up --build -d
 
-      - name: Wait for application
+      - name: Inspect Docker network
         run: |
-          until docker compose exec -T app test -f /var/www/html/vendor/autoload.php
+          docker network ls
+          docker network inspect $(docker compose ps -q app | xargs docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}')
+
+      - name: Wait for database
+        run: |
+          until docker compose exec -T db mariadb-admin ping -h localhost --silent
           do
-            echo "Waiting for Composer..."
+            echo "Waiting for database..."
             sleep 2
           done
 
+      - name: Show containers
+        run: docker compose ps
+
+      - name: Show database logs
+        run: docker compose logs db
+
+      - name: Test database connection from app
+        run: |
+          docker compose exec -T app which mariadb-admin
+          docker compose exec -T app mariadb-admin \
+          --host=db \
+          --user=mental_health \
+          --password=secret \
+          ping
+      - name: Show container status
+        run: docker compose ps
+
+      - name: Show app logs
+        run: docker compose logs app
+
+      - name: List project files
+        run: docker compose exec -T app ls -la /var/www/html
+
+      - name: Check container
+        run: |
+          docker compose ps
+          docker compose exec -T app pwd
+          docker compose exec -T app ls -la /var/www/html
+
+      - name: Show app logs
+        if: always()
+        run: docker compose logs app
+
+      - name: Composer manually
+        run: docker compose exec -T app composer install -vvv
+
+      - name: Verify containers
+        run: docker compose ps
+
       - name: Run Laravel Pint
         run: docker compose exec -T app ./vendor/bin/pint --test
+
+      - name: Show memory
+        run: |
+          free -h
+          php -v
+
+      - name: Verify app container
+        run: |
+          docker compose ps
 
       - name: Run PHPStan
         run: docker compose exec -T app ./vendor/bin/phpstan analyse --no-progress
