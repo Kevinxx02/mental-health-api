@@ -22,11 +22,11 @@ jobs:
       - name: Build application
         run: docker compose up --build -d
 
-      - name: Wait for MariaDB
+      - name: Wait for application
         run: |
-          until docker compose exec -T db mariadb-admin ping -h localhost --silent
+          until docker compose exec -T app test -f /var/www/html/vendor/autoload.php
           do
-            echo "Waiting for database..."
+            echo "Waiting for Composer..."
             sleep 2
           done
 
