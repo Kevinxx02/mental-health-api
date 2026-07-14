@@ -24,6 +24,20 @@ jobs:
       - name: Build application
         run: docker compose up --build -d
 
+      - name: Show containers
+        run: docker compose ps
+
+      - name: Show database logs
+        run: docker compose logs db
+
+      - name: Test database connection from app
+        run: |
+          docker compose exec -T app which mariadb-admin
+          docker compose exec -T app mariadb-admin ping \
+            -h db \
+            -u mental_health \
+            -psecret
+
       - name: Show container status
         run: docker compose ps
 
