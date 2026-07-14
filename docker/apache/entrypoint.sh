@@ -7,7 +7,7 @@ echo "Waiting for MariaDB..."
 until mariadb-admin ping \
     -h "db" \
     -u "mental_health" \
-    -p"secret" \
+    -p "secret" \
     --silent
 do
     sleep 2
