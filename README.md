@@ -15,18 +15,37 @@ The project focuses on building production-quality backend software by combining
 
 ## Tech Stack
 
+### Backend
+
 - PHP 8.3
 - Laravel 13
 - MariaDB 11
 - Apache
+
+### Development
+
 - Docker
 - Docker Compose
+
+### Quality Assurance
+
 - PHPUnit
 - Laravel Pint
-- PHPStan + Larastan
+- PHPStan
+- Larastan
+- Infection PHP
+- PHP Metrics
 - GrumPHP
+
+### CI/CD
+
 - GitHub Actions
+
+### Documentation
+
 - OpenAPI 3.1 (Swagger)
+- Mermaid.js
+- Architecture Decision Records (ADR)
 
 ---
 
