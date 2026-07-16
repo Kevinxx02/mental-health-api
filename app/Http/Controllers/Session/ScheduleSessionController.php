@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Session;
 
-use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
 use App\Application\Ports\In\ScheduleSessionUseCase;
-
+use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ScheduleSessionRequest;
 use Illuminate\Http\JsonResponse;

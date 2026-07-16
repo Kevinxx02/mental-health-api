@@ -29,4 +29,9 @@ enum SessionStatus: string
     {
         return $this === self::Cancelled;
     }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
 }
