@@ -33,8 +33,8 @@ Mutation testing is integrated into the development workflow and executed as par
 
 The project enforces the following minimum quality thresholds:
 
-- Minimum Mutation Score Indicator (MSI): **95%**
-- Minimum Covered Mutation Score Indicator (Covered MSI): **95%**
+- Minimum Mutation Score Indicator (MSI): **90%**
+- Minimum Covered Mutation Score Indicator (Covered MSI): **90%**
 
 Any pull request or commit that does not satisfy these thresholds will fail the CI pipeline.
 

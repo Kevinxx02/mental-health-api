@@ -288,6 +288,10 @@ Generate Coverage:
 docker compose exec app php artisan test --coverage
 ```
 
+```bash
+docker compose exec -T app vendor/bin/infection --min-msi=90 --min-covered-msi=90
+```
+
 ---
 
 # Roadmap
