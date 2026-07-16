@@ -9,9 +9,11 @@ use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
+use App\Application\Ports\In\ScheduleSessionUseCase;
+
 use DateTimeImmutable;
 
-final readonly class ScheduleSessionHandler
+final readonly class ScheduleSessionHandler implements ScheduleSessionUseCase
 {
     public function __construct(private SessionRepository $repository) {}
 
