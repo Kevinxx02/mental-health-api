@@ -1,6 +1,6 @@
 # Mental Health API
 
-RESTful API for managing therapy sessions built with Laravel 13 using Domain-Driven Design (DDD), Clean Architecture and SOLID principles.
+RESTful API for managing therapy sessions built with Laravel 13 using Domain-Driven Design (DDD), Clean Architecture, Hexagonal architecture and SOLID principles.
 
 The project focuses on building production-quality backend software by combining rich domain modeling, automated quality gates, static analysis, automated testing, Dockerized development and Continuous Integration.
 
@@ -168,6 +168,7 @@ This project follows:
 
 - Domain-Driven Design (DDD)
 - Clean Architecture
+- Hexagonal Architecture
 - SOLID Principles
 - Repository Pattern
 - Dependency Injection
@@ -188,6 +189,7 @@ The pipeline performs:
 - PHPStan
 - PHPUnit
 - Code Coverage
+- Mutation Testing
 
 ---
 
