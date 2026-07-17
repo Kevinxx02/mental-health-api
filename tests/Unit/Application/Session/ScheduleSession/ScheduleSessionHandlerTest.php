@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Session\ScheduleSession;
 
+use App\Application\Ports\Out\SessionRepository;
 use App\Application\Session\ScheduleSession\ScheduleSessionCommand;
 use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
 use App\Domain\Session\Entities\Session;
-use App\Domain\Session\Repositories\SessionRepository;
 use PHPUnit\Framework\TestCase;
 
 final class ScheduleSessionHandlerTest extends TestCase

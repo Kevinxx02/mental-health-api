@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Domain\Session\Repositories\SessionRepository;
+use App\Application\Ports\Out\SessionRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentSessionRepository;
 use Illuminate\Support\ServiceProvider;
 

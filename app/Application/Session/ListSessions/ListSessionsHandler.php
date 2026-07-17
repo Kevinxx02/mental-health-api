@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\Session\ListSessions;
 
 use App\Application\Ports\In\ListSessionsUseCase;
+use App\Application\Ports\Out\SessionRepository;
 use App\Domain\Session\Entities\Session;
-use App\Domain\Session\Repositories\SessionRepository;
 
 final readonly class ListSessionsHandler implements ListSessionsUseCase
 {

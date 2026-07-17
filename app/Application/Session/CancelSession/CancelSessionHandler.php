@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Session\CancelSession;
 
 use App\Application\Ports\In\CancelSessionUseCase;
-use App\Domain\Session\Repositories\SessionRepository;
+use App\Application\Ports\Out\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionId;
 
 final readonly class CancelSessionHandler implements CancelSessionUseCase

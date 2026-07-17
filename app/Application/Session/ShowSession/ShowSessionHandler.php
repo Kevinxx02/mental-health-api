@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\Session\ShowSession;
 
 use App\Application\Ports\In\ShowSessionUseCase;
+use App\Application\Ports\Out\SessionRepository;
 use App\Domain\Session\Entities\Session;
-use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionId;
 
 final readonly class ShowSessionHandler implements ShowSessionUseCase

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Session\RescheduleSession;
 
 use App\Application\Ports\In\RescheduleSessionUseCase;
-use App\Domain\Session\Repositories\SessionRepository;
+use App\Application\Ports\Out\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use DateTimeImmutable;

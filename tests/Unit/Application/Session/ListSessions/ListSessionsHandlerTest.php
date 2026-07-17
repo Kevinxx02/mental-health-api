@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Session\ListSessions;
 
+use App\Application\Ports\Out\SessionRepository;
 use App\Application\Session\ListSessions\ListSessionsHandler;
 use App\Domain\Session\Entities\Session;
-use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
