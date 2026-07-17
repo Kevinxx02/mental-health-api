@@ -314,12 +314,12 @@ docker compose exec -T app vendor/bin/infection --min-msi=100 --min-covered-msi=
 - [x] Mutation Testing (Infection PHP)
 - [x] Architecture Diagrams
 - [x] PHP Metrics Report
+- [x] Project Badges
 
 ## Future Improvements
 
 - [ ] GitHub Release Workflow
 - [ ] Security Analysis (Composer Audit / CodeQL)
-- [ ] Project Badges
 
 ---
 
