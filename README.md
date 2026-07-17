@@ -1,6 +1,13 @@
 # Mental Health API
 
-RESTful API for managing therapy sessions built with Laravel 13 using Domain-Driven Design (DDD), Clean Architecture, Hexagonal architecture and SOLID principles.
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4)
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20)
+![PHPStan](https://img.shields.io/badge/PHPStan-Level%208-success)
+![Mutation](https://img.shields.io/badge/Mutation%20Score-100%25-success)
+![Coverage](https://img.shields.io/badge/Coverage-98.2%25-success)
+![License](https://img.shields.io/badge/license-Portfolio-blue)
+
+RESTful API for managing therapy sessions built with Laravel 13, demonstrating enterprise backend practices including Domain-Driven Design (DDD), Hexagonal Architecture, Clean Architecture, automated testing, and continuous integration.
 
 The project focuses on building production-quality backend software by combining rich domain modeling, automated quality gates, static analysis, automated testing, Dockerized development and Continuous Integration.
 
@@ -26,16 +33,6 @@ The project focuses on building production-quality backend software by combining
 
 - Docker
 - Docker Compose
-
-### Quality Assurance
-
-- PHPUnit
-- Laravel Pint
-- PHPStan
-- Larastan
-- Infection PHP
-- PHP Metrics
-- GrumPHP
 
 ### CI/CD
 
@@ -140,24 +137,29 @@ docker compose exec app vendor/bin/phpunit --coverage-html coverage
 # Project Structure
 
 ```
-App
-    Application
-        Commands
-        Queries
-        Handlers
+Application
+    Ports
+        In
+        Out
+    Session
+        ScheduleSession
+        ShowSession
+        CancelSession
+        CompleteSession
+        RescheduleSession
+        ListSessions
 
-    Domain
+Domain
+    Session
         Entities
         ValueObjects
         Exceptions
         Repositories
 
-    Infrastructure
-        Persistence
-            Eloquent
-                Models
-                Repositories
-                Mappers
+Infrastructure
+    Persistence
+    Http
+    Providers
 ```
 
 ---
@@ -201,10 +203,10 @@ The project enforces code quality through multiple automated tools:
 - PHPStan Level 8
 - Larastan
 - PHPUnit
-- Code Coverage
+- Code Coverage (98.2% coverage)
 - GrumPHP pre-commit hooks
 - GitHub Actions Continuous Integration
-- Mutation Testing (Infection)
+- Mutation Testing (100% MSI)
 
 Local commits are validated through GrumPHP pre-commit hooks, while GitHub Actions verifies every push and pull request.
 

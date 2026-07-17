@@ -4,7 +4,7 @@ Architecture.md
 
 ## Overview
 
-The project follows a layered architecture inspired by Domain-Driven Design (DDD).
+The project follows Domain-Driven Design (DDD) combined with Hexagonal Architecture and Clean Architecture principles.
 
 The primary objective is to separate business logic from framework-specific code, allowing the domain to evolve independently from Laravel and any infrastructure concerns.
 
@@ -26,27 +26,37 @@ The architecture is based on the following principles:
 
 # Layered Architecture
 
-The application is divided into four primary layers.
 ```mermaid
-flowchart TD
+flowchart LR
 
-    Client["HTTP Client"]
+Client --> Controller
 
-    Interface["Interface Layer<br/>(Controllers, Requests, Resources)"]
+Controller --> InPort
 
-    Application["Application Layer<br/>(Use Cases, DTOs)"]
+InPort --> UseCase
 
-    Domain["Domain Layer<br/>(Entities, Value Objects, Repository Interfaces)"]
+UseCase --> OutPort
 
-    Infrastructure["Infrastructure Layer<br/>(Eloquent, MariaDB, External Services)"]
+OutPort --> Repository
 
-    Client --> Interface
-    Interface --> Application
-    Application --> Domain
-    Infrastructure --> Domain
+Repository --> MariaDB
+
+UseCase --> Domain
 ```
 
 Each layer has a single, well-defined responsibility.
+
+---
+
+# Hexagonal Architecture
+
+The application uses Ports and Adapters to isolate the core business logic.
+
+Input Ports define the operations exposed by the application.
+
+Output Ports define the dependencies required by the application.
+
+Adapters translate framework-specific implementations into those abstractions.
 
 ---
 
