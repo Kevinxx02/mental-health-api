@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Session;
 
+use App\Application\Ports\In\CancelSessionUseCase;
 use App\Application\Session\CancelSession\CancelSessionCommand;
-use App\Application\Session\CancelSession\CancelSessionHandler;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +14,10 @@ final class CancelSessionController extends Controller
 {
     public function cancel(
         string $id,
-        CancelSessionHandler $handler
+        CancelSessionUseCase $useCase
     ): JsonResponse {
 
-        $handler(
+        $useCase(
             new CancelSessionCommand($id)
         );
 

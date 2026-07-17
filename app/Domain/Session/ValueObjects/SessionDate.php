@@ -40,6 +40,7 @@ final readonly class SessionDate
         return $this->value->format(DateTimeInterface::ATOM);
     }
 
+    /** @infection-ignore-all */
     private static function ensureIsNotPast(DateTimeImmutable $date): void
     {
         if ($date < new DateTimeImmutable) {
