@@ -79,16 +79,15 @@ final readonly class EloquentSessionRepository implements SessionRepository
     }
 
     /**
-     * @return list<Session>
+     * @return array<int, Session>
      */
     public function findAll(): array
     {
-        return array_values(
+        return
             SessionModel::query()
                 ->orderBy('session_date')
                 ->get()
                 ->map(SessionMapper::toDomain(...))
-                ->all()
-        );
+                ->all();
     }
 }

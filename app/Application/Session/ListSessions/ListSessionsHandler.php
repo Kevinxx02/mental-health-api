@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Application\Session\ListSessions;
 
+use App\Application\Ports\In\ListSessionsUseCase;
 use App\Domain\Session\Entities\Session;
 use App\Domain\Session\Repositories\SessionRepository;
 
-final readonly class ListSessionsHandler
+final readonly class ListSessionsHandler implements ListSessionsUseCase
 {
     public function __construct(
         private SessionRepository $repository
     ) {}
 
     /**
-     * @return list<Session>
+     * @return array<int, Session>
      */
     public function __invoke(): array
     {

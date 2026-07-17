@@ -6,10 +6,14 @@ namespace App\Providers;
 
 use App\Application\Ports\In\CancelSessionUseCase;
 use App\Application\Ports\In\CompleteSessionUseCase;
+use App\Application\Ports\In\ListSessionsUseCase;
+use App\Application\Ports\In\RescheduleSessionUseCase;
 use App\Application\Ports\In\ScheduleSessionUseCase;
 use App\Application\Ports\In\ShowSessionUseCase;
 use App\Application\Session\CancelSession\CancelSessionHandler;
 use App\Application\Session\CompleteSession\CompleteSessionHandler;
+use App\Application\Session\ListSessions\ListSessionsHandler;
+use App\Application\Session\RescheduleSession\RescheduleSessionHandler;
 use App\Application\Session\ScheduleSession\ScheduleSessionHandler;
 use App\Application\Session\ShowSession\ShowSessionHandler;
 use Illuminate\Support\ServiceProvider;
@@ -36,6 +40,16 @@ final class UseCaseServiceProvider extends ServiceProvider
         $this->app->bind(
             CompleteSessionUseCase::class,
             CompleteSessionHandler::class,
+        );
+
+        $this->app->bind(
+            ListSessionsUseCase::class,
+            ListSessionsHandler::class,
+        );
+
+        $this->app->bind(
+            RescheduleSessionUseCase::class,
+            RescheduleSessionHandler::class,
         );
     }
 }

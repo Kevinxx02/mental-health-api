@@ -14,7 +14,7 @@ interface SessionRepository
     public function findById(SessionId $id): Session;
 
     /**
-     * @return list<Session>
+     * @return array<int, Session>
      */
     public function findAll(): array;
 }

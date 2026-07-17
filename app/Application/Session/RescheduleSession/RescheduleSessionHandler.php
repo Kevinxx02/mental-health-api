@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Application\Session\RescheduleSession;
 
+use App\Application\Ports\In\RescheduleSessionUseCase;
 use App\Domain\Session\Repositories\SessionRepository;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use DateTimeImmutable;
 
-final readonly class RescheduleSessionHandler
+final readonly class RescheduleSessionHandler implements RescheduleSessionUseCase
 {
     public function __construct(
         private SessionRepository $repository
