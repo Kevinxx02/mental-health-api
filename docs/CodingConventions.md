@@ -82,11 +82,23 @@ Business rules belong exclusively to the Domain.
 
 Primitive values should be replaced by Value Objects whenever they improve expressiveness.
 
+## Value Objects should:
+
+* Be immutable.
+* Validate their own invariants.
+* Expose meaningful behavior.
+* Avoid primitive obsession.
 ---
 
 # Application Layer
 
 Each Use Case should represent one business action.
+
+Use Cases should implement the corresponding Input Port.
+
+Use Cases should not depend on framework-specific classes.
+
+Commands and Responses should be used to communicate with the Interface layer.
 
 Examples:
 
@@ -100,7 +112,7 @@ Use Cases should orchestrate business operations without containing business rul
 
 # Infrastructure
 
-Infrastructure contains implementation details.
+Infrastructure contains the concrete adapters required by the application.
 
 Examples:
 
@@ -108,6 +120,7 @@ Examples:
 * Database access
 * External services
 * Persistence
+* Mappers
 
 Infrastructure must never contain business decisions.
 
@@ -142,6 +155,8 @@ The project follows these general principles:
 * Avoid unnecessary abstractions.
 * Refactor continuously.
 * Make illegal states impossible whenever practical.
+* Methods should return early whenever possible.
+* Deep nesting should be avoided.
 
 ---
 
@@ -149,4 +164,63 @@ The project follows these general principles:
 
 The project follows the PSR-12 coding standard.
 
-Formatting should be enforced automatically whenever possible.
+Formatting is automatically enforced using Laravel Pint.
+
+# Classes
+
+Classes should be declared as `final` whenever inheritance is not required.
+
+Immutable classes should use `readonly` when appropriate.
+
+Inheritance should be preferred only when it models a real "is-a" relationship.
+
+# Dependency Injection
+
+Dependencies should be injected through constructors.
+
+Service location should be avoided.
+
+Interfaces should be preferred over concrete implementations.
+
+# Exceptions
+
+Business rule violations should be represented as Domain Exceptions.
+
+Infrastructure exceptions should remain inside the Infrastructure layer whenever possible.
+
+HTTP exceptions should be generated only by the Interface layer.
+
+# Repository Pattern
+
+Repository interfaces belong to the application core.
+
+Concrete implementations belong to the Infrastructure layer.
+
+Repositories should expose business-oriented operations rather than persistence details.
+
+# Type Safety
+
+Strict typing must be enabled in every PHP file.
+
+Native PHP types should be preferred whenever possible.
+
+PHPDoc should complement native types rather than replace them.
+
+# PHPDoc
+
+PHPDoc should only be used when native type declarations are insufficient.
+
+Examples include:
+
+* Generic collections
+* Array shapes
+* Template annotations
+* Complex return types
+
+# Ports
+
+Input Ports define the operations exposed by the application.
+
+Output Ports define the dependencies required by the application.
+
+Concrete implementations should never be referenced directly from the Interface layer.

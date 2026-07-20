@@ -11,11 +11,27 @@ The objective is to ensure that the application behaves correctly as it evolves.
 
 # Testing Levels
 
-The project uses two primary testing levels.
+    Testing Pyramid
+
+```text
+Unit Tests
+
+↓
+
+Feature Tests
+
+↓
+
+Mutation Testing
+
+↓
+
+Static Analysis
+```text
 
 ## Unit Tests
 
-Unit Tests validate the Domain.
+Unit Tests validate the Domain and Application layers without requiring Laravel.
 
 Characteristics:
 
@@ -50,15 +66,29 @@ Examples:
 
 ---
 
+## Mutation Testing
+
+Mutation Testing evaluates the effectiveness of the automated test suite.
+
+Instead of executing the application normally, it introduces small changes (mutations) into the source code.
+
+A mutation is considered killed when at least one automated test detects the behavioral change.
+
+The project targets a Mutation Score Indicator (MSI) of 100%.
+
 # What Should Be Tested
 
 Every important business rule.
 
-Every Use Case.
+Every business invariant.
 
-Every API endpoint.
+Every Value Object.
 
-Every identified bug before fixing it.
+Every Domain Exception.
+
+Every HTTP endpoint.
+
+Every bug before it is fixed.
 
 ---
 
@@ -105,3 +135,54 @@ it_returns_a_404_when_session_does_not_exist()
 # Goal
 
 Testing should provide confidence to refactor the code without fear of breaking existing functionality.
+
+# Static Analysis
+Static Analysis complements automated testing by validating code before execution.
+
+The project uses:
+
+- PHPStan Level 8
+- Larastan
+
+Static Analysis verifies:
+
+- Type safety
+- Interface contracts
+- Invalid method calls
+- Dead code
+- Architectural consistency
+
+# Test Coverage
+Code Coverage is monitored to identify untested areas of the application.
+
+Coverage should be interpreted together with Mutation Testing.
+
+High coverage alone does not guarantee effective tests.
+
+# Quality Gates
+
+Every contribution should pass:
+
+```text
+Pint
+
+↓
+
+PHPStan
+
+↓
+
+PHPUnit
+
+↓
+
+Feature Tests
+
+↓
+
+Mutation Testing
+
+↓
+
+GitHub Actions
+```

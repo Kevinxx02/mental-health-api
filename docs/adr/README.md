@@ -19,6 +19,7 @@ ADRs document significant architectural decisions made during the development of
 | ADR-009 | Accepted | Continuous Integration Pipeline                |
 | ADR-010 | Accepted | Accept PHP Metrics Architectural Warnings      |
 | ADR-011 | Accepted | Adopt Mutation Testing                         |
+| ADR-012 | Accepted | Adopt Hexagonal Architecture                   |
 
 ## ADR Structure
 

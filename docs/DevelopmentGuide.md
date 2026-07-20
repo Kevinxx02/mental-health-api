@@ -17,14 +17,17 @@ The objective of this project is to develop a professional REST API using Larave
 
 The project focuses on:
 
-* Domain-Driven Design (DDD)
-* SOLID Principles
-* Clean Code
-* REST API Design
-* Automated Testing
-* OpenAPI Documentation
-* Docker
-* Version Control with Git
+- Domain-Driven Design (DDD)
+- Hexagonal Architecture
+- Clean Architecture
+- SOLID Principles
+- Repository Pattern
+- Automated Testing
+- Static Analysis
+- Continuous Integration
+- REST API Design
+- OpenAPI Documentation
+- Docker
 
 The project intentionally prioritizes software quality over the number of implemented features.
 
@@ -115,15 +118,17 @@ Model the Domain
         ↓
 Design the Use Case
         ↓
-Implement the solution
+Define Ports
         ↓
-Write automated tests
+Implement Infrastructure Adapters
         ↓
-Document the API
+Write Tests
         ↓
-Review and refactor
+Run Quality Tools
         ↓
-Commit changes
+Update Documentation
+        ↓
+Commit
 ```
 
 No feature is considered complete before finishing every step.
@@ -135,10 +140,13 @@ No feature is considered complete before finishing every step.
 During development:
 
 * Business logic belongs to the Domain.
-* Use Cases coordinate business operations.
 * Infrastructure contains technical implementations.
 * Controllers remain thin.
 * Dependencies point toward the Domain.
+* Controllers depend on Input Ports.
+* Use Cases implement Input Ports.
+* Infrastructure implements Output Ports.
+* Repository interfaces define Output Ports.
 
 Whenever a significant architectural decision is made, an Architecture Decision Record (ADR) should be created.
 
@@ -158,15 +166,28 @@ The project follows these quality goals:
 
 Code should communicate intent before implementation details.
 
+Every contribution should satisfy the project's quality gates:
+
+- Laravel Pint
+- PHPStan Level 8
+- PHPUnit
+- Feature Tests
+- Mutation Testing
+- GitHub Actions
+
 ---
 
 # Testing
 
 Testing is part of development, not a final verification step.
 
-Business rules should be validated with Unit Tests.
+Unit Tests validate domain behavior.
 
-API behavior should be validated with Feature Tests.
+Feature Tests validate HTTP endpoints.
+
+Mutation Testing verifies that automated tests effectively detect behavioral changes.
+
+Static Analysis validates contracts and detects programming errors before execution.
 
 Whenever a bug is discovered, a failing test should be written before applying the fix whenever practical.
 
@@ -221,3 +242,44 @@ The project is considered successful when:
 * Documentation accurately reflects the implementation.
 
 Success is measured by software quality, not by feature count.
+
+# Adding a New Feature
+```text
+Business Rule
+
+↓
+
+Entity / Value Object
+
+↓
+
+Use Case
+
+↓
+
+Input Port
+
+↓
+
+Output Port (if required)
+
+↓
+
+Infrastructure Adapter
+
+↓
+
+Controller
+
+↓
+
+Feature Test
+
+↓
+
+Mutation Test
+
+↓
+
+Documentation
+```
