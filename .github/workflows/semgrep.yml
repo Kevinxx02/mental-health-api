@@ -23,4 +23,3 @@ jobs:
             p/php
             p/owasp-top-ten
             p/security-audit
-            p/laravel
