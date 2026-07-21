@@ -34,6 +34,9 @@ jobs:
       - name: Install Composer dependencies
         run: docker compose exec -T app composer install --no-interaction --prefer-dist
 
+      - name: Composer Security Audit
+        run: composer audit
+
       - name: Run Laravel Pint
         run: docker compose exec -T app ./vendor/bin/pint --test
 

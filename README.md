@@ -207,6 +207,7 @@ The project enforces code quality through multiple automated tools:
 - GrumPHP pre-commit hooks
 - GitHub Actions Continuous Integration
 - Mutation Testing (100% MSI)
+- Composer Audit
 
 Local commits are validated through GrumPHP pre-commit hooks, while GitHub Actions verifies every push and pull request.
 
@@ -315,11 +316,11 @@ docker compose exec -T app vendor/bin/infection --min-msi=100 --min-covered-msi=
 - [x] Architecture Diagrams
 - [x] PHP Metrics Report
 - [x] Project Badges
+- [x] Security Analysis (Composer Audit / CodeQL)
 
 ## Future Improvements
 
 - [ ] GitHub Release Workflow
-- [ ] Security Analysis (Composer Audit / CodeQL)
 
 ---
 
