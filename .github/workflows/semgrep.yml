@@ -1,0 +1,26 @@
+name: Semgrep
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: |
+            p/php
+            p/owasp-top-ten
+            p/security-audit
+            p/laravel
