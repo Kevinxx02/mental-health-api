@@ -20,6 +20,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
+      - name: Create network
+      - run: docker network create backend || true
+
       - name: Build application
         run: docker compose up --build -d
 
