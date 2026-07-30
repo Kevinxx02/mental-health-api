@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Application\Ports\Out\DomainEventPublisher;
 use App\Application\Ports\Out\SessionRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentSessionRepository;
+use App\Infrastructure\RabbitMQ\RabbitDomainEventPublisher;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -15,6 +17,11 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             SessionRepository::class,
             EloquentSessionRepository::class
+        );
+
+        $this->app->bind(
+            DomainEventPublisher::class,
+            RabbitDomainEventPublisher::class,
         );
     }
 }

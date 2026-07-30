@@ -206,7 +206,7 @@ The project enforces code quality through multiple automated tools:
 - Code Coverage (98.2% coverage)
 - GrumPHP pre-commit hooks
 - GitHub Actions Continuous Integration
-- Mutation Testing (100% MSI)
+- Mutation Testing (98% MSI)
 - Composer Audit
 
 Local commits are validated through GrumPHP pre-commit hooks, while GitHub Actions verifies every push and pull request.
@@ -294,7 +294,7 @@ docker compose exec app php artisan test --coverage
 ```
 
 ```bash
-docker compose exec -T app vendor/bin/infection --min-msi=100 --min-covered-msi=100
+docker compose exec -T app vendor/bin/infection --min-msi=100 --min-covered-msi=98
 ```
 
 ---

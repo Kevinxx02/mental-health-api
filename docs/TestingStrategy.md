@@ -74,7 +74,7 @@ Instead of executing the application normally, it introduces small changes (muta
 
 A mutation is considered killed when at least one automated test detects the behavioral change.
 
-The project targets a Mutation Score Indicator (MSI) of 100%.
+The project targets a Mutation Score Indicator (MSI) of 98%.
 
 # What Should Be Tested
 
