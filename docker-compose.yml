@@ -5,16 +5,45 @@ services:
       context: .
       dockerfile: docker/apache/Dockerfile
 
-    container_name: mental-health-api
+    depends_on:
+      db:
+        condition: service_healthy
 
-    ports:
-      - "8000:80"
+    networks:
+      - default
+      - backend
 
     volumes:
       - ./:/var/www/html
 
+    ports:
+      - "8000:80"
+
+  db:
+    image: mariadb:11
+
+    restart: unless-stopped
+
+    environment:
+      MARIADB_DATABASE: mental_health_api
+      MARIADB_USER: mental_health
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_PASSWORD: root
+
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
     networks:
-      - backend
+      - default
+
+volumes:
+  mariadb_data:
 
 networks:
   backend:
