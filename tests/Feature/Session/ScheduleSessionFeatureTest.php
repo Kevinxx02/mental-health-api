@@ -7,6 +7,7 @@ namespace Tests\Feature\Session;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Fakes\FakeDomainEventPublisher;
 use Tests\TestCase;
+use App\Application\Ports\Out\DomainEventPublisher;
 
 final class ScheduleSessionFeatureTest extends TestCase
 {
