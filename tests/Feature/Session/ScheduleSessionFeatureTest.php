@@ -5,11 +5,26 @@ declare(strict_types=1);
 namespace Tests\Feature\Session;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Fakes\FakeDomainEventPublisher;
 use Tests\TestCase;
 
 final class ScheduleSessionFeatureTest extends TestCase
 {
     use RefreshDatabase;
+
+    private FakeDomainEventPublisher $publisher;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->publisher = new FakeDomainEventPublisher;
+
+        $this->app->instance(
+            DomainEventPublisher::class,
+            $this->publisher,
+        );
+    }
 
     public function test_it_schedules_a_session(): void
     {

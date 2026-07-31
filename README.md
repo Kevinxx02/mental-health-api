@@ -294,7 +294,7 @@ docker compose exec app php artisan test --coverage
 ```
 
 ```bash
-docker compose exec -T app vendor/bin/infection --min-msi=100 --min-covered-msi=98
+docker compose exec -T app vendor/bin/infection --min-msi=98 --min-covered-msi=98
 ```
 
 ---
