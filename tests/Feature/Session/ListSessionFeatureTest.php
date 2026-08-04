@@ -9,6 +9,7 @@ use App\Domain\Session\Entities\Session;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -25,7 +26,7 @@ final class ListSessionFeatureTest extends TestCase
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -33,7 +34,7 @@ final class ListSessionFeatureTest extends TestCase
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f88'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 11:00:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -56,5 +57,12 @@ final class ListSessionFeatureTest extends TestCase
             ->assertExactJson([
                 'data' => [],
             ]);
+    }
+
+    private function getTomorrowDate(string $time = '10:00', bool $asText = false)
+    {
+        $date = new DateTimeImmutable("tomorrow $time");
+
+        return ($asText) ? $date->format('Y-m-d H:i') : $date;
     }
 }

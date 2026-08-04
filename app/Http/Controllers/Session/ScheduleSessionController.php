@@ -24,7 +24,8 @@ final class ScheduleSessionController extends Controller
             new ScheduleSessionCommand(
                 patientId: $request->string('patient_id')->toString(),
                 therapistId: $request->string('therapist_id')->toString(),
-                sessionDate: $request->string('session_date')->toString()
+                sessionDate: $request->string('session_date')->toString(),
+                notificationEmail: $request->string('notification_email')->toString()
             )
         );
 

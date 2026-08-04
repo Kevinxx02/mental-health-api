@@ -9,6 +9,7 @@ use App\Domain\Session\Entities\Session;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -21,13 +22,12 @@ final class ShowSessionFeatureTest extends TestCase
     {
         /** @var SessionRepository $repository */
         $repository = app(SessionRepository::class);
+        $tomorrow = new DateTimeImmutable('tomorrow 10:00');
 
         $session = Session::schedule(
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
-            SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
-            )
+            SessionDate::fromDateTime($tomorrow),
         );
 
         $repository->save($session);

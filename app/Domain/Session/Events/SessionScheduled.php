@@ -18,6 +18,7 @@ final readonly class SessionScheduled implements DomainEvent
         private PatientId $patientId,
         private TherapistId $therapistId,
         private SessionDate $sessionDate,
+        private string $notificationEmail,
         private DateTimeImmutable $occurredOn = new DateTimeImmutable,
     ) {}
 
@@ -29,6 +30,11 @@ final readonly class SessionScheduled implements DomainEvent
     public function occurredOn(): DateTimeImmutable
     {
         return $this->occurredOn;
+    }
+
+    public function notificationEmail(): string
+    {
+        return $this->notificationEmail;
     }
 
     /**

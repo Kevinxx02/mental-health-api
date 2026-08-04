@@ -40,6 +40,7 @@ final readonly class ScheduleSessionHandler implements ScheduleSessionUseCase
                 patientId: $session->patientId(),
                 therapistId: $session->therapistId(),
                 sessionDate: $session->sessionDate(),
+                notificationEmail: $command->notificationEmail,
             ),
         );
 

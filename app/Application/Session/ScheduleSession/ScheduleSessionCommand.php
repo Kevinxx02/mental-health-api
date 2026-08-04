@@ -9,6 +9,7 @@ final readonly class ScheduleSessionCommand
     public function __construct(
         public string $patientId,
         public string $therapistId,
-        public string $sessionDate
+        public string $sessionDate,
+        public string $notificationEmail,
     ) {}
 }

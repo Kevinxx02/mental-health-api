@@ -40,14 +40,14 @@ final class RescheduleSessionHandlerTest extends TestCase
         $handler(
             new RescheduleSessionCommand(
                 $session->id()->value(),
-                '2030-12-25 17:30'
+                $this->getTomorrowDate('17:30', true)
             )
         );
 
         $this->assertTrue(
             $session->sessionDate()->equals(
                 SessionDate::fromDateTime(
-                    new DateTimeImmutable('2030-12-25 17:30')
+                    $this->getTomorrowDate('17:30')
                 )
             )
         );
@@ -79,7 +79,7 @@ final class RescheduleSessionHandlerTest extends TestCase
         $handler(
             new RescheduleSessionCommand(
                 SessionId::generate()->value(),
-                '2030-12-25 17:30'
+                $this->getTomorrowDate('17:30', true)
             )
         );
     }
@@ -113,7 +113,7 @@ final class RescheduleSessionHandlerTest extends TestCase
         $handler(
             new RescheduleSessionCommand(
                 $session->id()->value(),
-                '2030-12-25 17:30'
+                $this->getTomorrowDate('17:30', true)
             )
         );
     }
@@ -147,7 +147,7 @@ final class RescheduleSessionHandlerTest extends TestCase
         $handler(
             new RescheduleSessionCommand(
                 $session->id()->value(),
-                '2030-12-25 17:30'
+                $this->getTomorrowDate('17:30', true)
             )
         );
     }
@@ -158,8 +158,15 @@ final class RescheduleSessionHandlerTest extends TestCase
             PatientId::generate(),
             TherapistId::generate(),
             SessionDate::fromDateTime(
-                new DateTimeImmutable('tomorrow 10:00')
+                $this->getTomorrowDate()
             )
         );
+    }
+
+    private function getTomorrowDate(string $time = '10:00', bool $asText = false)
+    {
+        $date = new DateTimeImmutable("tomorrow $time");
+
+        return ($asText) ? $date->format('Y-m-d H:i') : $date;
     }
 }

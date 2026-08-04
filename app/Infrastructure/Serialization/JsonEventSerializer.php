@@ -24,6 +24,7 @@ final class JsonEventSerializer implements EventSerializer
                 'occurredOn' => $event
                     ->occurredOn()
                     ->format(DateTimeInterface::ATOM),
+                'notificationEmail' => $event->notificationEmail(),
                 'payload' => $event->payload(),
             ],
             JSON_THROW_ON_ERROR,

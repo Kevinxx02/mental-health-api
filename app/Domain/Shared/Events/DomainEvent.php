@@ -10,6 +10,8 @@ interface DomainEvent
 
     public function occurredOn(): \DateTimeImmutable;
 
+    public function notificationEmail(): string;
+
     /**
      * @return array<string, mixed>
      */

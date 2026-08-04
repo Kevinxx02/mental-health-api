@@ -10,6 +10,8 @@ use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\SessionId;
 use App\Domain\Session\ValueObjects\TherapistId;
 use App\Infrastructure\Serialization\JsonEventSerializer;
+use DateTimeImmutable;
+use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
@@ -24,8 +26,9 @@ final class JsonEventSerializerTest extends TestCase
             patientId: PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             therapistId: TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             sessionDate: SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
+                $this->getTomorrowDate()
             ),
+            notificationEmail: 'kevinguevara02@gmail.com'
         );
 
         $json = $serializer->serialize($event);
@@ -42,7 +45,12 @@ final class JsonEventSerializerTest extends TestCase
         );
 
         $this->assertSame(
-            $event->occurredOn()->format(\DateTimeInterface::ATOM),
+            'kevinguevara02@gmail.com',
+            $data['notificationEmail'],
+        );
+
+        $this->assertSame(
+            $event->occurredOn()->format(DateTimeInterface::ATOM),
             $data['occurredOn'],
         );
         $this->assertCount(4, $data['payload']);
@@ -51,7 +59,7 @@ final class JsonEventSerializerTest extends TestCase
                 'sessionId' => '0197eeb6-39e4-7e77-9e93-0cf7d8680f87',
                 'patientId' => '0197eeb6-39e4-7e77-9e93-0cf7d8680f87',
                 'therapistId' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-                'sessionDate' => '2026-08-01T10:00:00+00:00',
+                'sessionDate' => $this->getTomorrowDate()->format(DateTimeInterface::ATOM),
             ],
             $data['payload'],
         );
@@ -59,5 +67,12 @@ final class JsonEventSerializerTest extends TestCase
         $this->assertTrue(
             Uuid::isValid($data['eventId']),
         );
+    }
+
+    private function getTomorrowDate(string $time = '10:00', bool $asText = false)
+    {
+        $date = new DateTimeImmutable("tomorrow $time");
+
+        return ($asText) ? $date->format('Y-m-d H:i') : $date;
     }
 }

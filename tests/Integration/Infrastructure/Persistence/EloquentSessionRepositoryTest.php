@@ -34,7 +34,7 @@ final class EloquentSessionRepositoryTest extends TestCase
             PatientId::generate(),
             TherapistId::generate(),
             SessionDate::fromDateTime(
-                new DateTimeImmutable('2026-08-01 10:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -55,7 +55,7 @@ final class EloquentSessionRepositoryTest extends TestCase
             PatientId::generate(),
             TherapistId::generate(),
             SessionDate::fromDateTime(
-                new DateTimeImmutable('2026-08-01 10:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -101,5 +101,12 @@ final class EloquentSessionRepositoryTest extends TestCase
         );
 
         $this->repository->findById($sessionId);
+    }
+
+    private function getTomorrowDate(string $time = '10:00', bool $asText = false)
+    {
+        $date = new DateTimeImmutable("tomorrow $time");
+
+        return ($asText) ? $date->format('Y-m-d H:i') : $date;
     }
 }

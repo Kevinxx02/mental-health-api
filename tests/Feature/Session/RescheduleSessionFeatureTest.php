@@ -9,6 +9,7 @@ use App\Domain\Session\Entities\Session;
 use App\Domain\Session\ValueObjects\PatientId;
 use App\Domain\Session\ValueObjects\SessionDate;
 use App\Domain\Session\ValueObjects\TherapistId;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -25,7 +26,7 @@ final class RescheduleSessionFeatureTest extends TestCase
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -34,7 +35,7 @@ final class RescheduleSessionFeatureTest extends TestCase
         $response = $this->patchJson(
             "/api/sessions/{$session->id()->value()}/reschedule",
             [
-                'session_date' => '2026-08-02 18:00:00',
+                'session_date' => $this->getTomorrowDate('18:00', true),
             ]
         );
 
@@ -42,7 +43,7 @@ final class RescheduleSessionFeatureTest extends TestCase
 
         $this->assertDatabaseHas('sessions', [
             'id' => $session->id()->value(),
-            'session_date' => '2026-08-02 18:00:00',
+            'session_date' => $this->getTomorrowDate('18:00'),
         ]);
     }
 
@@ -51,7 +52,7 @@ final class RescheduleSessionFeatureTest extends TestCase
         $this->patchJson(
             '/api/sessions/0197eeb6-39e4-7e77-9e93-0cf7d8680f87/reschedule',
             [
-                'session_date' => '2026-08-02 18:00:00',
+                'session_date' => $this->getTomorrowDate('18:00', true),
             ]
         )->assertNotFound();
     }
@@ -65,7 +66,7 @@ final class RescheduleSessionFeatureTest extends TestCase
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -74,7 +75,7 @@ final class RescheduleSessionFeatureTest extends TestCase
         $this->patchJson(
             "/api/sessions/{$session->id()->value()}/reschedule",
             [
-                'session_date' => '2026-08-02 22:00:00',
+                'session_date' => $this->getTomorrowDate('22:00', true),
             ]
         )
             ->assertStatus(422)
@@ -93,7 +94,7 @@ final class RescheduleSessionFeatureTest extends TestCase
             PatientId::fromString('0197eeb6-39e4-7e77-9e93-0cf7d8680f87'),
             TherapistId::fromString('0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f'),
             SessionDate::fromDateTime(
-                new \DateTimeImmutable('2026-08-01 10:00:00')
+                $this->getTomorrowDate()
             )
         );
 
@@ -107,5 +108,12 @@ final class RescheduleSessionFeatureTest extends TestCase
             ->assertJsonValidationErrors([
                 'session_date',
             ]);
+    }
+
+    private function getTomorrowDate(string $time = '10:00', bool $asText = false)
+    {
+        $date = new DateTimeImmutable("tomorrow $time");
+
+        return ($asText) ? $date->format('Y-m-d H:i') : $date;
     }
 }

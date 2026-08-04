@@ -31,6 +31,10 @@ final class ScheduleSessionRequest extends FormRequest
                 'required',
                 'date',
             ],
+            'notification_email' => [
+                'required',
+                'string',
+            ],
         ];
     }
 }

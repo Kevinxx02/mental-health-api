@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Session;
 
 use App\Application\Ports\Out\DomainEventPublisher;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Fakes\FakeDomainEventPublisher;
 use Tests\TestCase;
@@ -29,10 +30,13 @@ final class ScheduleSessionFeatureTest extends TestCase
 
     public function test_it_schedules_a_session(): void
     {
+        $tomorrow = new DateTimeImmutable('tomorrow 10:00');
+
         $response = $this->postJson('/api/sessions', [
             'patient_id' => '0197eeb6-39e4-7e77-9e93-0cf7d8680f87',
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 10:00:00',
+            'session_date' => $this->getTomorrowDate(),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response
@@ -53,7 +57,8 @@ final class ScheduleSessionFeatureTest extends TestCase
     {
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 10:00:00',
+            'session_date' => $this->getTomorrowDate(),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response
@@ -68,6 +73,7 @@ final class ScheduleSessionFeatureTest extends TestCase
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response
@@ -81,7 +87,8 @@ final class ScheduleSessionFeatureTest extends TestCase
     {
         $response = $this->postJson('/api/sessions', [
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 10:00:00',
+            'session_date' => $this->getTomorrowDate(),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response
@@ -96,7 +103,8 @@ final class ScheduleSessionFeatureTest extends TestCase
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 21:30:00',
+            'session_date' => $this->getTomorrowDate('21:30'),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response
@@ -111,7 +119,8 @@ final class ScheduleSessionFeatureTest extends TestCase
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 21:00:00',
+            'session_date' => $this->getTomorrowDate('21:00'),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response->assertStatus(201);
@@ -122,7 +131,8 @@ final class ScheduleSessionFeatureTest extends TestCase
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 09:00:00',
+            'session_date' => $this->getTomorrowDate('09:00'),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response->assertStatus(201);
@@ -133,7 +143,8 @@ final class ScheduleSessionFeatureTest extends TestCase
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 17:00:00',
+            'session_date' => $this->getTomorrowDate('17:00'),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response->assertStatus(201);
@@ -141,12 +152,20 @@ final class ScheduleSessionFeatureTest extends TestCase
 
     public function test_morning_top_business_hours(): void
     {
+        $tomorrow = (new DateTimeImmutable('tomorrow 13:30'))->format('Y-m-d H:i');
+
         $response = $this->postJson('/api/sessions', [
             'therapist_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
             'patient_id' => '0197eeb6-4f53-77c1-9ec5-5b3b0f8af76f',
-            'session_date' => '2026-08-01 13:30:00',
+            'session_date' => $this->getTomorrowDate('13:30'),
+            'notification_email' => 'kevinguevara02@gmail.com',
         ]);
 
         $response->assertStatus(201);
+    }
+
+    private function getTomorrowDate(string $time = '10:00')
+    {
+        return (new DateTimeImmutable("tomorrow $time"))->format('Y-m-d H:i');
     }
 }
